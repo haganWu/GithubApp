@@ -1,4 +1,4 @@
-package com.githubapp;
+package com.hagan.github;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
