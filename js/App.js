@@ -6,35 +6,11 @@
  * @flow strict-local
  */
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-} from 'react-native';
+import React, {Component} from 'react';
+import AppNavigators from "./navigator/AppNavigators";
 
-
-const App: () => Node = () => {
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Hello Github App!</Text>
-        </View>
-    );
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-
-    text: {
-        fontSize: 16,
-        color: "#7fb550",
-    },
-});
-
-export default App;
+export default class App extends Component {
+    render() {
+        return <AppNavigators/>;
+    }
+}
