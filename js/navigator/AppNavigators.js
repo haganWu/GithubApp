@@ -8,6 +8,7 @@ import React, {Component} from 'react';
 import {createStackNavigator} from "@react-navigation/stack";
 import {NavigationContainer} from "@react-navigation/native";
 import HomePage from "../page/HomePage";
+import WelcomePage from "../page/WelcomePage";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,9 @@ class AppNavigators extends Component {
         return (
             <NavigationContainer>
                 <Stack.Navigator>
+                    <Stack.Screen name="WelcomePage" component={WelcomePage}
+                                  options={{headerShown: false}}/>
+
                     <Stack.Screen name="HomePage" component={HomePage}
                                   options={{headerShown: false}}/>
                 </Stack.Navigator>
