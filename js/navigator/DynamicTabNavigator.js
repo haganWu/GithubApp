@@ -5,13 +5,12 @@
  * @data 2021/10/14 14:08
  */
 import React from "react";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {BottomTabBar, createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import PopularPage from "../page/PopularPage";
 import TrendingPage from "../page/TrendingPage";
 import FavoritePage from "../page/FavoritePage";
 import MyPage from "../page/MyPage";
 import {NavigationContainer} from "@react-navigation/native";
-import {LogBox} from "react-native";
 import IconFont from "../res/iconfont";
 
 
@@ -65,7 +64,6 @@ class DynamicTabNavigator extends React.Component<Props> {
 
     constructor(props) {
         super(props);
-        LogBox.ignoreAllLogs(true);
     }
 
     _tabNavigator() {
@@ -79,9 +77,12 @@ class DynamicTabNavigator extends React.Component<Props> {
         return this.Tabs =
             <NavigationContainer independent={true}>
                 <Tab.Navigator
-                    tabBarOptions={{
-                        activeTintColor: "#DC971D",
-                        inactiveTintColor: "gray",
+                    // tabBarOptions={{
+                    //     activeTintColor: "#DC971D",
+                    //     inactiveTintColor: "gray",
+                    // }}
+                    tabBar={props => {
+                        return <TabBarComponent theme={props.theme} {...props}/>
                     }}
                 >
                     {
@@ -101,20 +102,21 @@ class DynamicTabNavigator extends React.Component<Props> {
     }
 }
 
-// class TabBarComponent extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.theme = {
-//             tintColor: props.activeTintColor,
-//             updateTime: new Date().getTime(),
-//         };
-//     }
-//
-//     render() {
-//         return <BottomTabBar
-//             activeTintColor={"#ff562a"}
-//         />;
-//     }
-// }
+class TabBarComponent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.theme = {
+            tintColor: props.activeTintColor,
+            updateTime: new Date().getTime(),
+        };
+    }
+
+    render() {
+        return <BottomTabBar
+            {...this.props}
+            activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+        />;
+    }
+}
 
 export default DynamicTabNavigator;

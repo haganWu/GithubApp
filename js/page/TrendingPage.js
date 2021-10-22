@@ -6,13 +6,20 @@
  */
 import React from "react";
 import {Component} from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Button, StyleSheet, Text, View} from "react-native";
 
 class TrendingPage extends Component {
     render() {
+        const {navigation} = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.text}>趋势</Text>
+                <Button title={'修改主题颜色'} onPress={() => navigation.setParams({
+                    theme: {
+                        tintColor: 'red',
+                        updateTime: new Date().getTime(),
+                    },
+                })}/>
             </View>
         );
     }
