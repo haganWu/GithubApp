@@ -6,11 +6,10 @@
  */
 import React from "react";
 import {Component} from "react";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {NavigationContainer} from "@react-navigation/native";
-import HomeTab1 from "./homeTabs/HomeTab1";
-import HomeTab2 from "./homeTabs/HomeTab2";
+import NavigationUtil from "../navigator/NavigationUtil";
 
 type Props = {}
 const Tab = createMaterialTopTabNavigator();
@@ -19,6 +18,20 @@ class PopularPage extends Component<Props> {
 
     constructor(props) {
         super(props);
+        this.tabNames = ["Java", "Android", "Kotlin", "Object-C", "IOS", "Swift"];
+    }
+
+    _genTabs() {
+        const tabs = {};
+        this.tabNames.forEach((item, index) => {
+            tabs[`tab${index}`] = {
+                screen: props => <PopularTab {...props} tabLabel={item}/>,
+                navigationOptions: {
+                    title: item,
+                },
+            }
+        });
+        return tabs;
     }
 
     render() {
@@ -31,6 +44,7 @@ class PopularPage extends Component<Props> {
                         tabBarItemStyle: styles.tabStyle,
                         tabBarScrollEnabled: true,
                         tabBarActiveTintColor: "#DC971D",
+                        // upperCaseLabel: false,
                         tabBarInactiveTintColor: "white",
                         tabBarStyle: {
                             backgroundColor: "#7dc5eb",//TabBar 的背景颜色
@@ -40,14 +54,15 @@ class PopularPage extends Component<Props> {
                     }
                 }
             >
-                <Tab.Screen
-                    name={"HomeTab1"}
-                    component={HomeTab1}
-                    options={{tabBarLabel: "HomeTab1"}}/>
-                <Tab.Screen
-                    name={"HomeTab2"}
-                    component={HomeTab2}
-                    options={{tabBarLabel: "HomeTab2"}}/>
+                {
+                    Object.entries(this._genTabs()).map(item => {
+                        return <Tab.Screen
+                            name={item[0]}
+                            component={item[1].screen}
+                            options={item[1].navigationOptions}
+                        />
+                    })
+                }
             </Tab.Navigator>
         </NavigationContainer>
 
@@ -92,7 +107,34 @@ const styles = StyleSheet.create({
         color: 'red',
         margin: 10,
     },
+    popularTabContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textJump: {
+        fontSize: 16,
+        color: "blue",
+        marginTop: 12,
+    },
 });
 
-
 export default PopularPage;
+
+class PopularTab extends Component<Props> {
+
+    render() {
+        const {tabLabel} = this.props;
+        return (
+            <View style={styles.popularTabContainer}>
+                <Text style={styles.text}>{tabLabel}</Text>
+                <Text style={styles.textJump} onPress={() => {
+                    console.log('跳转到详情  点击');
+                    NavigationUtil.goPage({
+                        navigation: this.props.navigation,
+                    }, "DetailPage")
+                }}>跳转到详情</Text>
+            </View>
+        );
+    }
+}

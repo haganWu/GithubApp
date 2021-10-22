@@ -7,9 +7,18 @@
 import React from "react";
 import {Component} from "react";
 import DynamicTabNavigator from "../navigator/DynamicTabNavigator";
+import NavigationUtil from "../navigator/NavigationUtil";
 
-class HomePage extends Component {
+type Props = {};
+
+class HomePage extends Component<Props> {
+
+    constructor(props) {
+        super(props);
+    }
+
     render() {
+        NavigationUtil.navigation = this.props.navigation;
         return <DynamicTabNavigator/>;
     }
 }

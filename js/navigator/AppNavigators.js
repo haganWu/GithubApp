@@ -9,6 +9,7 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {NavigationContainer} from "@react-navigation/native";
 import HomePage from "../page/HomePage";
 import WelcomePage from "../page/WelcomePage";
+import DetailPage from "../page/homeTabs/DetailPage";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,8 @@ class AppNavigators extends Component {
 
                     <Stack.Screen name="HomePage" component={HomePage}
                                   options={{headerShown: false}}/>
+                    <Stack.Screen name="DetailPage" component={DetailPage}
+                                  options={{headerShown: true}}/>
                 </Stack.Navigator>
 
             </NavigationContainer>
