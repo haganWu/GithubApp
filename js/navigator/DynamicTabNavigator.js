@@ -5,14 +5,14 @@
  * @data 2021/10/14 14:08
  */
 import React from "react";
-import {BottomTabBar, createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import PopularPage from "../page/PopularPage";
 import TrendingPage from "../page/TrendingPage";
 import FavoritePage from "../page/FavoritePage";
 import MyPage from "../page/MyPage";
 import {NavigationContainer} from "@react-navigation/native";
 import IconFont from "../res/iconfont";
-
+import {connect} from "react-redux";
 
 const Tab = createBottomTabNavigator();
 type Props = {};
@@ -67,23 +67,26 @@ class DynamicTabNavigator extends React.Component<Props> {
     }
 
     _tabNavigator() {
-        if (this.Tabs) {
-            return this.Tabs;
-        }
+        // if (this.Tabs) {
+        //     console.log("返回  this.Tabs");
+        //     return this.Tabs;
+        // }
         const {PopularPage, TrendingPage, FavoritePage, MyPage} = TABS;
         const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage};
         //动态配置Tab属性
         PopularPage.navigationOptions.tabBarLabel = '最热';//动态配置Tab属性
+        const color = this.props.theme;
+        console.log(`修改颜色color -> ${color}`);
         return this.Tabs =
             <NavigationContainer independent={true}>
                 <Tab.Navigator
-                    // tabBarOptions={{
-                    //     activeTintColor: "#DC971D",
-                    //     inactiveTintColor: "gray",
-                    // }}
-                    tabBar={props => {
-                        return <TabBarComponent theme={this.props.theme} {...props}/>
+                    screenOptions={{
+                        tabBarActiveTintColor:this.props.theme ,
                     }}
+                    // tabBar={props => {
+                    //     console.log(`this.props.theme -> ${this.props.theme}`);
+                    //     return <TabBarComponent  {...props} theme={this.props.theme}/>
+                    // }}
                 >
                     {
                         Object.entries(tabs).map(item => {
@@ -102,22 +105,25 @@ class DynamicTabNavigator extends React.Component<Props> {
     }
 }
 
-class TabBarComponent extends React.Component {
-    constructor(props) {
-        super(props);
-        this.theme = {
-            tintColor: props.activeTintColor,
-            updateTime: new Date().getTime(),
-        };
-    }
+// class TabBarComponent extends React.Component {
+//     // constructor(props) {
+//     //     super(props);
+//     //     this.theme = {
+//     //         tintColor: props.activeTintColor,
+//     //         updateTime: new Date().getTime(),
+//     //     };
+//     // }
+//
+//     render() {
+//         return <BottomTabBar
+//             {...this.props}
+//             activeTintColor={this.props.theme}
+//         />;
+//     }
+// }
 
-    render() {
-        return <BottomTabBar
-            {...this.props}
-            activeTintColor={this.theme.tintColor || this.props.activeTintColor}
-            //activeTintColor={this.props.theme.tintColor || this.props.activeTintColor}
-        />;
-    }
-}
+const mapStateToProps = state => ({
+    theme: state.theme.theme,
+})
 
-export default DynamicTabNavigator;
+export default connect(mapStateToProps)(DynamicTabNavigator);
