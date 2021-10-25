@@ -8,9 +8,12 @@
 
 import React, {Component} from 'react';
 import AppNavigators from "./navigator/AppNavigators";
+import {Provider} from "react-redux";
+import store from "./store"
 
 export default class App extends Component {
     render() {
-        return <AppNavigators/>;
+        //将store传递给APP框架
+        return <Provider store={store}><AppNavigators/></Provider>;
     }
 }
