@@ -82,7 +82,7 @@ class DynamicTabNavigator extends React.Component<Props> {
                     //     inactiveTintColor: "gray",
                     // }}
                     tabBar={props => {
-                        return <TabBarComponent theme={props.theme} {...props}/>
+                        return <TabBarComponent theme={this.props.theme} {...props}/>
                     }}
                 >
                     {
@@ -115,6 +115,7 @@ class TabBarComponent extends React.Component {
         return <BottomTabBar
             {...this.props}
             activeTintColor={this.theme.tintColor || this.props.activeTintColor}
+            //activeTintColor={this.props.theme.tintColor || this.props.activeTintColor}
         />;
     }
 }
