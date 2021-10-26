@@ -10,6 +10,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import HomePage from "../page/HomePage";
 import WelcomePage from "../page/WelcomePage";
 import DetailPage from "../page/homeTabs/DetailPage";
+import FetchDemo from "../page/demo/FetchDemo";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,8 @@ class AppNavigators extends Component {
                     <Stack.Screen name="HomePage" component={HomePage}
                                   options={{headerShown: false}}/>
                     <Stack.Screen name="DetailPage" component={DetailPage}
+                                  options={{headerShown: true}}/>
+                    <Stack.Screen name="FetchDemo" component={FetchDemo}
                                   options={{headerShown: true}}/>
                 </Stack.Navigator>
 

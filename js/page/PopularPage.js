@@ -6,7 +6,7 @@
  */
 import React from "react";
 import {Component} from "react";
-import {StyleSheet, Text, View} from "react-native";
+import {Button, StyleSheet, Text, View} from "react-native";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import NavigationUtil from "../navigator/NavigationUtil";
@@ -117,6 +117,9 @@ const styles = StyleSheet.create({
         color: "blue",
         marginTop: 12,
     },
+    buttonJump: {
+        marginTop: 12,
+    },
 });
 
 export default PopularPage;
@@ -134,6 +137,13 @@ class PopularTab extends Component<Props> {
                         navigation: this.props.navigation,
                     }, "DetailPage")
                 }}>跳转到详情</Text>
+
+                <Button style={styles.buttonJump} title={"Fetch使用"} onPress={() => {
+                    NavigationUtil.goPage({
+                        navigation: this.props.navigation,
+                    }, "FetchDemo")
+                }
+                }/>
             </View>
         );
     }
