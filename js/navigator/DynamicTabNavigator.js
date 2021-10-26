@@ -75,18 +75,12 @@ class DynamicTabNavigator extends React.Component<Props> {
         const tabs = {PopularPage, TrendingPage, FavoritePage, MyPage};
         //动态配置Tab属性
         PopularPage.navigationOptions.tabBarLabel = '最热';//动态配置Tab属性
-        const color = this.props.theme;
-        console.log(`修改颜色color -> ${color}`);
         return this.Tabs =
             <NavigationContainer independent={true}>
                 <Tab.Navigator
                     screenOptions={{
-                        tabBarActiveTintColor:this.props.theme ,
+                        tabBarActiveTintColor: this.props.theme,
                     }}
-                    // tabBar={props => {
-                    //     console.log(`this.props.theme -> ${this.props.theme}`);
-                    //     return <TabBarComponent  {...props} theme={this.props.theme}/>
-                    // }}
                 >
                     {
                         Object.entries(tabs).map(item => {
@@ -105,23 +99,9 @@ class DynamicTabNavigator extends React.Component<Props> {
     }
 }
 
-// class TabBarComponent extends React.Component {
-//     // constructor(props) {
-//     //     super(props);
-//     //     this.theme = {
-//     //         tintColor: props.activeTintColor,
-//     //         updateTime: new Date().getTime(),
-//     //     };
-//     // }
-//
-//     render() {
-//         return <BottomTabBar
-//             {...this.props}
-//             activeTintColor={this.props.theme}
-//         />;
-//     }
-// }
-
+/**
+ * 将store中的theme数据注入到当前页面的props里面
+ */
 const mapStateToProps = state => ({
     theme: state.theme.theme,
 })

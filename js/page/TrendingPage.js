@@ -17,7 +17,8 @@ class TrendingPage extends Component {
             <View style={styles.container}>
                 <Text style={styles.text}>趋势</Text>
                 <Button title={'修改主题颜色'} onPress={() => {
-                   this.props.onThemeChange('#7fb550');
+                    //在当前页面中获取props中的onThemeChange触发一个action，action交由reducer处理，reducer返回一个新的state，由于state发生变化初始页面刷新，改变页面显式效果。
+                    this.props.onThemeChange('#7fb550');
                 }}/>
             </View>
         );
@@ -37,7 +38,14 @@ const styles = StyleSheet.create({
         color: "#7fb550",
     },
 });
+
+/**
+ * 将action创建函数onThemeChange 关联到props中
+ * @param dispatch
+ * @returns {{onThemeChange: (function(*=): *)}}
+ */
 const mapDispatchToProps = dispatch => ({
     onThemeChange: theme => dispatch(actions.onThemeChange(theme)),
 })
+
 export default connect(null, mapDispatchToProps)(TrendingPage);

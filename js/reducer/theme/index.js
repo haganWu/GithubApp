@@ -12,7 +12,6 @@ const defaultState = {
 export default function onAction(state = defaultState, action) {
     switch (action.type) {
         case Types.THEME_CHANGE:
-            console.log(`Types.THEME_CHANGE --修改主题颜色->${action.theme}`);
             return {
                 ...state,
                 theme: action.theme,
@@ -20,5 +19,4 @@ export default function onAction(state = defaultState, action) {
         default:
             return state;
     }
-
 }
