@@ -9,7 +9,7 @@ import Types from '../../action/types'
 const defaultState = {}
 
 /**
- * @description
+ * @description 结果
  *
  * popular:{
  *     java:{
