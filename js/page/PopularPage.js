@@ -183,9 +183,18 @@ class PopularTab extends Component<Props> {
     }
 }
 
+/**
+ * 将state中相关数据订阅到props中，在页面中通过this.props去除请求结果数据
+ */
 const mapStateToProps = state => ({
     popular: state.popular,
 })
+
+/**
+ * 发送action，将action创建函数和props进行关联，在页面中通过this.props取出创建函数发送action进行数据加载请求
+ * @param dispatch
+ * @returns {{onLoadPopularData: (function(*=, *=): *)}}
+ */
 const mapDispatchToProps = dispatch => ({
     onLoadPopularData: (storeName, url) => dispatch(actions.onLoadPopularData(storeName, url)),
 })
