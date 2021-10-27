@@ -18,7 +18,7 @@ class FavoritePage extends Component {
             <View style={styles.container}>
                 <Text style={styles.text}>收藏</Text>
                 <Button title={'修改主题颜色'} onPress={() => {
-                    this.props.onThemeChange('blue');
+                    this.props.onThemeChange('#faa');
                 }}/>
             </View>
         );
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontSize: 22,
-        color: "#7fb550",
+        color: "#faa",
     },
 });
 const mapDispatchToProps = dispatch => ({
