@@ -6,11 +6,12 @@
  */
 import React from "react";
 import {Component} from "react";
-import {FlatList, RefreshControl, StyleSheet, Text, View} from "react-native";
+import {FlatList, RefreshControl, StyleSheet, View} from "react-native";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import actions from '../action/index'
 import {connect} from "react-redux";
+import PopularItem from "../common/PopularItem";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars'
@@ -101,23 +102,16 @@ const styles = StyleSheet.create({
         backgroundColor: "#DC971D",
     },
     labelStyle: {
-        fontSize: 13,
+        fontSize: 18,
         margin: 0,
+        textTransform: "lowercase",//设置Tab标题字母小写
     },
     popularTabContainer: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: '#e3e3e3',
+        paddingBottom: 10,
     },
 
-    renderItemContainer: {
-        marginVertical: 12,
-        backgroundColor: 'yellow',
-    },
-    renderText: {
-        backgroundColor: '#ffa',
-        fontSize: 16,
-        color: "#7fb550",
-    },
 });
 
 export default PopularPage;
@@ -143,13 +137,20 @@ class PopularTab extends Component<Props> {
         return URL + key + QUERY_STR;
     }
 
+    onItemClick(item) {
+        console.log(`onItemClick->${item["full_name"]}`)
+    }
+
+    onCollectionClick(item) {
+        console.log(`onCollectionClick->${item["stargazers_count"]}`)
+    }
+
+
     renderItem(data) {
         const item = data.item;
-        console.log(JSON.stringify(item));
         return (
-            <View style={styles.renderItemContainer}>
-                <Text style={styles.renderText}>{JSON.stringify(item)}</Text>
-            </View>
+            <PopularItem item={item} onItemClick={this.onItemClick(item)}
+                         onCollectionClick={this.onCollectionClick(item)}/>
         );
     }
 
