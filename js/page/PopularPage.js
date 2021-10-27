@@ -6,7 +6,7 @@
  */
 import React from "react";
 import {Component} from "react";
-import {Button, StyleSheet, Text, View} from "react-native";
+import {Button, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import NavigationUtil from "../navigator/NavigationUtil";
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         color: "blue",
         marginTop: 12,
     },
-    buttonJump: {
+    buttonContainer: {
         marginTop: 12,
     },
 });
@@ -138,12 +138,31 @@ class PopularTab extends Component<Props> {
                     }, "DetailPage")
                 }}>跳转到详情</Text>
 
-                <Button style={styles.buttonJump} title={"Fetch使用"} onPress={() => {
-                    NavigationUtil.goPage({
-                        navigation: this.props.navigation,
-                    }, "FetchDemo")
-                }
-                }/>
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Button title={"Fetch使用"} onPress={() => {
+                        NavigationUtil.goPage({
+                            navigation: this.props.navigation,
+                        }, "FetchDemo")
+                    }
+                    }/>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Button title={"AsyncStorage使用"} onPress={() => {
+                        NavigationUtil.goPage({
+                            navigation: this.props.navigation,
+                        }, "AsyncStorageDemo")
+                    }
+                    }/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonContainer}>
+                    <Button title={"离线缓存框架使用"} onPress={() => {
+                        NavigationUtil.goPage({
+                            navigation: this.props.navigation,
+                        }, "DataStoreDemo")
+                    }
+                    }/>
+                </TouchableOpacity>
             </View>
         );
     }
