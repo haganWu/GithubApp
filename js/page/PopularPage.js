@@ -6,10 +6,9 @@
  */
 import React from "react";
 import {Component} from "react";
-import {Button, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {NavigationContainer} from "@react-navigation/native";
-import NavigationUtil from "../navigator/NavigationUtil";
 
 type Props = {}
 const Tab = createMaterialTopTabNavigator();
@@ -78,12 +77,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-
     text: {
         fontSize: 22,
         color: "#7fb550",
     },
-
     tabStyle: {
         // minWidth: 50 //fix minWidth会导致tabStyle初次加载时闪烁
         width: 80,
@@ -100,25 +97,10 @@ const styles = StyleSheet.create({
         fontSize: 13,
         margin: 0,
     },
-    indicatorContainer: {
-        alignItems: 'center',
-    },
-    indicator: {
-        color: 'red',
-        margin: 10,
-    },
     popularTabContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    textJump: {
-        fontSize: 16,
-        color: "blue",
-        marginTop: 12,
-    },
-    buttonContainer: {
-        marginTop: 12,
     },
 });
 
@@ -131,38 +113,6 @@ class PopularTab extends Component<Props> {
         return (
             <View style={styles.popularTabContainer}>
                 <Text style={styles.text}>{tabLabel}</Text>
-                <Text style={styles.textJump} onPress={() => {
-                    console.log('跳转到详情  点击');
-                    NavigationUtil.goPage({
-                        navigation: this.props.navigation,
-                    }, "DetailPage")
-                }}>跳转到详情</Text>
-
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Button title={"Fetch使用"} onPress={() => {
-                        NavigationUtil.goPage({
-                            navigation: this.props.navigation,
-                        }, "FetchDemo")
-                    }
-                    }/>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Button title={"AsyncStorage使用"} onPress={() => {
-                        NavigationUtil.goPage({
-                            navigation: this.props.navigation,
-                        }, "AsyncStorageDemo")
-                    }
-                    }/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonContainer}>
-                    <Button title={"离线缓存框架使用"} onPress={() => {
-                        NavigationUtil.goPage({
-                            navigation: this.props.navigation,
-                        }, "DataStoreDemo")
-                    }
-                    }/>
-                </TouchableOpacity>
             </View>
         );
     }
