@@ -12,7 +12,7 @@ import DataStore from "../../expand/dao/DataStore";
  * @author HaganWu
  * @data 2021/10/27  10:22
  */
-export function onLoadPopularData(storeName, url) {
+export function onLoadPopularData(storeName, url, pageSize) {
     return dispatch => {
         dispatch({
             type: Types.POPULAR_REFRESH,
@@ -22,12 +22,12 @@ export function onLoadPopularData(storeName, url) {
         let dataStore = new DataStore();
         dataStore.fetchData(url)//异步action与数据流
             .then(data => {
-                dealWithData(dispatch, storeName, data);
+                dealWithData(dispatch, storeName, data, pageSize);
             })
             .catch(error => {
                 console.log(error);
                 dispatch({
-                    types: Types.LOAD_POPULAR_FAIL,
+                    types: Types.POPULAR_REFRESH_FAIL,
                     storeName: storeName,
                     error: error,
                 })
@@ -35,14 +35,56 @@ export function onLoadPopularData(storeName, url) {
     }
 }
 
-function dealWithData(dispatch, storeName, data) {
+/**
+ * @author HaganWu
+ * @description 上拉加载更多
+ * @fileName index.js
+ * @data 2021/10/28  9:49
+ */
+export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = [], callBack) {
+    return dispatch => {
+        setTimeout(() => {
+            if ((pageIndex - 1) * pageSize >= dataArray.length) {//已加载完全部数据
+                if (typeof callBack == 'function') {
+                    callBack('no more data');
+                }
+                dispatch({
+                    types: Types.POPULAR_LOAD_MORE_FAIL,
+                    error: 'no more',
+                    storeName: storeName,
+                    pageIndex: --pageIndex,
+                    projectModes: dataArray,
+                })
+            } else {
+                let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
+                dispatch({
+                    types: Types.POPULAR_LOAD_MORE_SUCCESS,
+                    storeName: storeName,
+                    pageIndex: pageIndex,
+                    projectModes: dataArray.slice(0, max),
+                })
+            }
+        }, 1000);
+    }
+}
+
+
+function dealWithData(dispatch, storeName, data, pageSize) {
+
+
+    let fixItems = [];
+    if (data && data.data && data.data.items) {
+        fixItems = data.data.items;
+    }
+
     /**
      * 发送通知：更新store中state中的数据
      */
     dispatch({
-        type: Types.LOAD_POPULAR_SUCCESS,
-        items: data && data.data && data.data.items,
+        type: Types.POPULAR_REFRESH_SUCCESS,
+        items: data.data.items,
+        projectModes: pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize),
         storeName: storeName,
-
+        pageIndex: 1,
     })
 }
