@@ -5,6 +5,12 @@
  * @data 2021/10/26 16:54
  */
 import {AsyncStorage} from "react-native";
+import GitHubTrending from "GitHubTrending/trending/GitHubTrending";
+
+export const FLAG_STORAGE = {
+    flag_popular: 'popular',
+    flag_trending: 'trending',
+};
 
 export default class DataStore {
 
@@ -49,38 +55,58 @@ export default class DataStore {
     /**
      * 获取网络数据
      * @param url
+     * @param flag
      * @returns {Promise<unknown>}
      */
-    fetchNetData(url) {
+    fetchNetData(url, flag) {
         return new Promise((resolve, reject) => {
-            fetch(url)
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json();
-                    }
-                    throw  new Error('Network response was not ok!');
-                })
-                .then((responseData) => {
-                    this.saveData(url, responseData);
-                })
-                .catch(error => {
-                    reject(error);
-                })
+            if (flag === FLAG_STORAGE.flag_popular) {
+                fetch(url)
+                    .then((response) => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw  new Error('Network response was not ok!');
+                    })
+                    .then((responseData) => {
+                        this.saveData(url, responseData);
+                        resolve(responseData);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+            } else if (flag === FLAG_STORAGE.flag_trending) {
+                new GitHubTrending().fetchTrending(url)
+                    .then(items => {
+                        if (!items) {
+                            throw  new Error("Response data  is empty!")
+                        }
+                        this.saveData(url, items)
+                        resolve(items);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    })
+
+            }
+
         })
     }
 
     /**
+     * 主入口
      * 获取数据 优先从本地获取，如果无本地数据或者本地数据无效，则再从网络获取
      * @param url
+     * @param flag
      * @returns {Promise<unknown>}
      */
-    fetchData(url) {
+    fetchData(url, flag) {
         return new Promise((resolve, reject) => {
             this.fetchLocalData(url).then((wrapData) => {
                 if (wrapData && DataStore.checkTimestampValid(wrapData.timestamp)) {
                     resolve(wrapData);
                 } else {
-                    this.fetchNetData(url).then((data) => {
+                    this.fetchNetData(url, flag).then((data) => {
                         resolve(this._wrapData(data));
                     }).catch((error) => {
                         reject(error);
@@ -88,7 +114,7 @@ export default class DataStore {
 
                 }
             }).catch(() => {
-                this.fetchNetData(url).then((data) => {
+                this.fetchNetData(url, flag).then((data) => {
                     resolve(this._wrapData(data));
                 }).catch((error) => {
                     reject(error);
