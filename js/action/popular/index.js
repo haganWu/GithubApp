@@ -27,7 +27,7 @@ export function onLoadPopularData(storeName, url, pageSize) {
             .catch(error => {
                 console.log(error);
                 dispatch({
-                    types: Types.POPULAR_REFRESH_FAIL,
+                    type: Types.POPULAR_REFRESH_FAIL,
                     storeName: storeName,
                     error: error,
                 })
@@ -49,29 +49,26 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
                     callBack('no more data');
                 }
                 dispatch({
-                    types: Types.POPULAR_LOAD_MORE_FAIL,
+                    type: Types.POPULAR_LOAD_MORE_FAIL,
                     error: 'no more',
                     storeName: storeName,
                     pageIndex: --pageIndex,
-                    projectModes: dataArray,
                 })
             } else {
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
                 dispatch({
-                    types: Types.POPULAR_LOAD_MORE_SUCCESS,
+                    type: Types.POPULAR_LOAD_MORE_SUCCESS,
                     storeName: storeName,
                     pageIndex: pageIndex,
                     projectModes: dataArray.slice(0, max),
                 })
             }
-        }, 1000);
+        }, 200);
     }
 }
 
 
 function dealWithData(dispatch, storeName, data, pageSize) {
-
-
     let fixItems = [];
     if (data && data.data && data.data.items) {
         fixItems = data.data.items;
@@ -82,7 +79,7 @@ function dealWithData(dispatch, storeName, data, pageSize) {
      */
     dispatch({
         type: Types.POPULAR_REFRESH_SUCCESS,
-        items: data.data.items,
+        items: fixItems,
         projectModes: pageSize > fixItems.length ? fixItems : fixItems.slice(0, pageSize),
         storeName: storeName,
         pageIndex: 1,
