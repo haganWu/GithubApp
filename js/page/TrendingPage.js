@@ -9,17 +9,34 @@ import {Component} from "react";
 import {Button, StyleSheet, Text, View} from "react-native";
 import {connect} from "react-redux";
 import actions from "../action"
+import NavigationBar from "../common/NavigationBar";
 
+const Theme_COLOR = '#7dc5eb';
 
 class TrendingPage extends Component {
+
     render() {
+        let statusBar = {
+            backgroundColor: Theme_COLOR,
+            barStyle: "light-content",
+        }
+        let navigationBar =
+            <NavigationBar
+                title={'趋势'}
+                statusBar={statusBar}
+                style={{backgroundColor: Theme_COLOR}}
+            />
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>趋势</Text>
-                <Button title={'修改主题颜色'} onPress={() => {
-                    //在当前页面中获取props中的onThemeChange触发一个action，action交由reducer处理，reducer返回一个新的state，由于state发生变化初始页面刷新，改变页面显式效果。
-                    this.props.onThemeChange('#7fb550');
-                }}/>
+                {navigationBar}
+                <View style={styles.contentContainer}>
+                    <Text style={styles.text}>趋势</Text>
+                    <Button title={'修改主题颜色'} onPress={() => {
+                        //在当前页面中获取props中的onThemeChange触发一个action，action交由reducer处理，reducer返回一个新的state，由于state发生变化初始页面刷新，改变页面显式效果。
+                        this.props.onThemeChange('#7fb550');
+                    }}/>
+                </View>
+
             </View>
         );
     }
@@ -28,11 +45,13 @@ class TrendingPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
         backgroundColor: "#ffffff",
     },
-
+    contentContainer: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+    },
     text: {
         fontSize: 22,
         color: "#7fb550",

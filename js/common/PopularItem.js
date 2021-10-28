@@ -20,7 +20,7 @@ class PopularItem extends React.Component {
             >
                 <View style={styles.itemContainer}>
                     <Text style={styles.fullNameText}>{item["full_name"]}</Text>
-                    <Text style={styles.descriptionText}>{item["description"]}</Text>
+                    <Text ellipsizeMode={'tail'} numberOfLines={3} style={styles.descriptionText}>{item["description"]}</Text>
 
                     <View style={styles.bottomContainer}>
                         <Text style={styles.authorText}>Author:</Text>
@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontSize: 16,
         color: 'gray',
-        maxHeight: 60,
     },
     bottomContainer: {
         flexDirection: "row",
