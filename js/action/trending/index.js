@@ -1,34 +1,29 @@
 /**
  * @author HaganWu
- * @description index
+ * @description
  * @fileName index.js
- * @data 2021/10/25 14:52
+ * @data 2021/10/28  16:23
  */
 import Types from "../types"
 import DataStore, {FLAG_STORAGE} from "../../expand/dao/DataStore";
 import dealWithData from "../ActionUtil";
 
-/**
- * @description  发送请求（由PopularPage页面中发起） 获取最热数据的异步action(action数据会流转到reducer)
- * @author HaganWu
- * @data 2021/10/27  10:22
- */
-export function onLoadPopularData(storeName, url, pageSize) {
+export function onRefreshTrending(storeName, url, pageSize) {
     return dispatch => {
         dispatch({
-            type: Types.POPULAR_REFRESH,
+            type: Types.TRENDING_REFRESH,
             storeName: storeName,
         });
         //从dataStore中获取异步数据
         let dataStore = new DataStore();
-        dataStore.fetchData(url, FLAG_STORAGE.flag_popular)//异步action与数据流
+        dataStore.fetchData(url, FLAG_STORAGE.flag_trending)//异步action与数据流
             .then(data => {
-                dealWithData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, data, pageSize);
+                dealWithData(Types.TRENDING_REFRESH_SUCCESS, dispatch, storeName, data, pageSize);
             })
             .catch(error => {
                 console.log(error);
                 dispatch({
-                    type: Types.POPULAR_REFRESH_FAIL,
+                    type: Types.TRENDING_REFRESH_FAIL,
                     storeName: storeName,
                     error: error,
                 })
@@ -37,12 +32,11 @@ export function onLoadPopularData(storeName, url, pageSize) {
 }
 
 /**
+ * @description
  * @author HaganWu
- * @description 上拉加载更多
- * @fileName index.js
- * @data 2021/10/28  9:49
+ * @data 2021/10/28  16:26
  */
-export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = [], callBack) {
+export function onLoadMoreTrending(storeName, pageIndex, pageSize, dataArray = [], callBack) {
     return dispatch => {
         setTimeout(() => {
             if ((pageIndex - 1) * pageSize >= dataArray.length) {//已加载完全部数据
@@ -50,7 +44,7 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
                     callBack('no more data');
                 }
                 dispatch({
-                    type: Types.POPULAR_LOAD_MORE_FAIL,
+                    type: Types.TRENDING_LOAD_MORE_FAIL,
                     error: 'no more',
                     storeName: storeName,
                     pageIndex: --pageIndex,
@@ -58,13 +52,13 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
             } else {
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
                 dispatch({
-                    type: Types.POPULAR_LOAD_MORE_SUCCESS,
+                    type: Types.TRENDING_LOAD_MORE_SUCCESS,
                     storeName: storeName,
                     pageIndex: pageIndex,
                     projectModes: dataArray.slice(0, max),
                 })
             }
-        }, 200);
+        }, 300);
     }
 }
 
