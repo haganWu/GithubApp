@@ -5,7 +5,7 @@
  * @data 2021/10/29 10:17
  */
 import React from "react";
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {DeviceInfo, Modal, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import IconFont from "../res/iconfont";
 import TimeSpan from "../model/TimeSpan";
 
@@ -51,7 +51,7 @@ class TrendingDialog extends React.Component {
                                     onPress={() => onSelect(arr[i])}
                                     underlayColor="transparent"
                                 >
-                                    <View style={styles.textContainer}>
+                                    <View>
                                         <Text style={styles.showTextStyle}>{arr[i].showText}</Text>
                                         {i !== TIME_SPANS.length - 1 ? <View style={styles.line}/> : null}
                                     </View>
@@ -70,12 +70,13 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'rgba(0,0,0,0.6)',
         alignItems: 'center',
+        paddingTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0,
     },
     triangle: {
-        marginTop: 40,
+        marginTop: 30,
         color: 'white',
         padding: 0,
-        margin: -15,
+        marginBottom: -15,
     },
     content: {
         backgroundColor: 'white',
@@ -83,20 +84,16 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         paddingVertical: 6,
     },
-    textContainer: {
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
     showTextStyle: {
         fontSize: 16,
         color: 'black',
         fontWeight: '400',
-        paddingVertical: 8,
-        paddingHorizontal: 26,
+        paddingVertical: 12,
+        paddingHorizontal: 36,
     },
     line: {
-        height: 0.5,
-        backgroundColor: 'darkgray',
+        height: 0.3,
+        backgroundColor: '#e1e1e1',
     },
 })
 
