@@ -21,27 +21,26 @@ class TrendingItem extends React.Component {
                 onPress={this.props.onItemClick}
             >
                 <View style={styles.itemContainer}>
-                    <Text style={styles.fullNameText}>{item["full_name"]}</Text>
+                    <Text style={styles.fullNameText}>{item["fullName"]}</Text>
                     <HTMLView
-                        // style={styles.descriptionText}
                         value={descriptionContent}
-                        // onLinkPress={(url) => {
-                        //     //根据url跳转到指定页面
-                        // }}
                     />
                     <Text ellipsizeMode={'tail'} numberOfLines={3}
                           style={styles.descriptionText}>{item["meta"]}  </Text>
 
                     <View style={styles.bottomContainer}>
-                        <Text style={styles.authorText}>Contributors:</Text>
-                        {item.contributors.map((result, i, arr) => {
-                            return <Image
-                                key={i}
-                                source={{uri: arr[i]}}
-                                style={styles.avatarImage}
-                            />
-                        })}
-
+                        <View style={styles.contributorsContainer}>
+                            <Text style={styles.authorText}>Contributors:</Text>
+                            {
+                                item.contributors.slice(0, item.contributors.length <= 3 ? item.contributors.length : 3).map((result, i, arr) => {
+                                    return <Image
+                                        key={i}
+                                        source={{uri: arr[i]}}
+                                        style={styles.avatarImage}
+                                    />
+                                })
+                            }
+                        </View>
                         <TouchableOpacity onPress={this.props.onCollectionClick}>
                             <IconFont name={'collection'} size={30}/>
                         </TouchableOpacity>
@@ -94,6 +93,12 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
     },
+    contributorsContainer: {
+        flexDirection: "row",
+        flex: 1,
+        alignItems: 'center',
+    },
+
 })
 
 export default TrendingItem;

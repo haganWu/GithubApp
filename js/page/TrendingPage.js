@@ -16,7 +16,7 @@ import Toast from 'react-native-easy-toast';
 import NavigationBar from "../common/NavigationBar";
 
 const URL = 'https://github.com/trending/';
-const QUERY_STR = '&since=daily'
+const QUERY_STR = '?since=daily'
 const Theme_COLOR = '#7dc5eb';
 const PAGE_SIZE = 10;
 
@@ -27,7 +27,7 @@ class TrendingPage extends Component<Props> {
 
     constructor(props) {
         super(props);
-        this.tabNames = ["Java", "Kotlin", "Object-C", "Swift", "C#", "JavaScript"];
+        this.tabNames = ["Java", "Kotlin", "objective-c", "Swift", "C#", "JavaScript"];
     }
 
     _genTabs() {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     },
     tabStyle: {
         // minWidth: 50 //fix minWidth会导致tabStyle初次加载时闪烁
-        width: 80,
+        width: 90,
         padding: 0,
     },
     indicatorStyle: {//指示器样式
@@ -141,7 +141,6 @@ class TrendingTab extends Component<Props> {
         super(props);
         const {tabLabel} = this.props;
         this.storeName = tabLabel;
-        this.canLoadMore = false;
     }
 
     componentDidMount() {
@@ -234,18 +233,9 @@ class TrendingTab extends Component<Props> {
                     ListFooterComponent={() => this.genIndicator()}
                     onEndReached={() => {
                         //列表滚动到底部时回调
-                        setTimeout(() => {//确保 onEndReached 在 onMomentumScrollBegin 之后执行
-                            if (this.canLoadMore) {
-                                this.loadData(true);
-                                this.canLoadMore = false;
-                            }
-                        }, 100);
-
+                        this.loadData(true);
                     }}
                     onEndReachedThreshold={0.5}
-                    onMomentumScrollBegin={() => {
-                        this.canLoadMore = true;
-                    }}
                 />
                 <Toast
                     ref={'toast'}

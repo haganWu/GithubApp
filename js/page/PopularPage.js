@@ -141,7 +141,7 @@ class PopularTab extends Component<Props> {
         super(props);
         const {tabLabel} = this.props;
         this.storeName = tabLabel;
-        this.canLoadMore = false;
+        // this.canLoadMore = true;
     }
 
     componentDidMount() {
@@ -234,18 +234,19 @@ class PopularTab extends Component<Props> {
                     ListFooterComponent={() => this.genIndicator()}
                     onEndReached={() => {
                         //列表滚动到底部时回调
-                        setTimeout(() => {//确保 onEndReached 在 onMomentumScrollBegin 之后执行
-                            if (this.canLoadMore) {
-                                this.loadData(true);
-                                this.canLoadMore = false;
-                            }
-                        }, 100);
+                        this.loadData(true);
+                        // setTimeout(() => {//确保 onEndReached 在 onMomentumScrollBegin 之后执行
+                        //     if (this.canLoadMore) {
+                        //         this.loadData(true);
+                        //         this.canLoadMore = false;
+                        //     }
+                        // }, 100);
 
                     }}
                     onEndReachedThreshold={0.5}
-                    onMomentumScrollBegin={() => {
-                        this.canLoadMore = true;
-                    }}
+                    // onMomentumScrollBegin={() => {
+                    //     this.canLoadMore = true;
+                    // }}
                 />
                 <Toast
                     ref={'toast'}

@@ -35,7 +35,7 @@ export default function onAction(state = defaultState, action) {
                     items: action.items,//原始数据
                     projectModes: action.projectModes,//此次刷新后要展示的数据
                     isLoading: false,
-                    hideLoadingMore: false,
+                    hideLoadingMore: true,
                     pageIndex: action.pageIndex,
                 },
             }
@@ -54,6 +54,7 @@ export default function onAction(state = defaultState, action) {
                 [action.storeName]: {
                     ...state[action.storeName],
                     isLoading: false,
+                    hideLoadingMore: true,
                 },
             };
         case Types.TRENDING_LOAD_MORE_SUCCESS://上拉加载更多成功

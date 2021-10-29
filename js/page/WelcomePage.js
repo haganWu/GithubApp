@@ -44,7 +44,7 @@ class WelcomePage extends React.Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#f3c5a6",
+        backgroundColor: "#7dc5eb",
         justifyContent: "center",
         alignItems: "center",
     },
