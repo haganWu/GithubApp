@@ -76,7 +76,8 @@ export default class DataStore {
                         reject(error);
                     })
             } else if (flag === FLAG_STORAGE.flag_trending) {
-                new GitHubTrending().fetchTrending(url)
+                const AUTH_TOKEN = 'fd82d1e882462e23b8e88aa82198f166';
+                new GitHubTrending(AUTH_TOKEN).fetchTrending(url)
                     .then(items => {
                         if (!items) {
                             throw  new Error("Response data  is empty!")
