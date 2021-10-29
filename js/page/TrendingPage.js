@@ -18,7 +18,7 @@ import TrendingDialog, {TIME_SPANS} from "../common/TrendingDialog";
 import IconFont from "../res/iconfont";
 
 const URL = 'https://github.com/trending/';
-const QUERY_STR = '?since=daily'
+const QUERY_STR = '?since='
 const Theme_COLOR = '#7dc5eb';
 const PAGE_SIZE = 10;
 
@@ -40,7 +40,7 @@ class TrendingPage extends Component<Props> {
         const tabs = {};
         this.tabNames.forEach((item, index) => {
             tabs[`tab${index}`] = {
-                screen: props => <TrendingTabPage {...props} tabLabel={item}/>,
+                screen: props => <TrendingTabPage {...props} timeSpan={this.state.timeSpan} tabLabel={item}/>,
                 navigationOptions: {
                     title: item,
                 },
@@ -186,8 +186,9 @@ export default TrendingPage;
 class TrendingTab extends Component<Props> {
     constructor(props) {
         super(props);
-        const {tabLabel} = this.props;
+        const {tabLabel, timeSpan} = this.props;
         this.storeName = tabLabel;
+        this.timeSpan = timeSpan;
     }
 
     componentDidMount() {
@@ -198,7 +199,7 @@ class TrendingTab extends Component<Props> {
 
         const {onRefreshTrending, onLoadMoreTrending} = this.props;
         const store = this._store();
-        const url = this.genFetchUrl(this.storeName);
+        const url = this.genFetchUrl(this.storeName, this.timeSpan);
         if (loadMore) {
             onLoadMoreTrending(this.storeName, ++store.pageIndex, PAGE_SIZE, store.items, () => {
                 this.refs.toast.show('没有更多了');
@@ -228,8 +229,8 @@ class TrendingTab extends Component<Props> {
         return store;
     }
 
-    genFetchUrl(key) {
-        return URL + key + QUERY_STR;
+    genFetchUrl(key, timeSpan) {
+        return URL + key + QUERY_STR + timeSpan.searchText;
     }
 
     onItemClick(item) {
