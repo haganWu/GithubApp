@@ -6,7 +6,16 @@
  */
 import React from "react";
 import {Component} from "react";
-import {ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {
+    ActivityIndicator,
+    DeviceEventEmitter,
+    FlatList,
+    RefreshControl,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import actions from '../action/index'
@@ -21,7 +30,7 @@ const URL = 'https://github.com/trending/';
 const QUERY_STR = '?since='
 const Theme_COLOR = '#7dc5eb';
 const PAGE_SIZE = 10;
-
+const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE';
 type Props = {}
 const Tab = createMaterialTopTabNavigator();
 
@@ -70,7 +79,8 @@ class TrendingPage extends Component<Props> {
         this.dialog.dismiss();
         this.setState({
             timeSpan: tab,
-        })
+        });
+        DeviceEventEmitter.emit(EVENT_TYPE_TIME_SPAN_CHANGE, tab)
     }
 
     renderTrendingDialog() {
@@ -193,6 +203,16 @@ class TrendingTab extends Component<Props> {
 
     componentDidMount() {
         this.loadData(false);
+        this.timeSpanChangeListener = DeviceEventEmitter.addListener(EVENT_TYPE_TIME_SPAN_CHANGE, (timeSpan) => {
+            this.timeSpan = timeSpan;
+            console.log(`timeSpan had changed:${timeSpan.searchText}`)
+        });
+    }
+
+    componentWillUnmount() {
+        if (this.timeSpanChangeListener !== null) {
+            this.timeSpanChangeListener.remove();
+        }
     }
 
     loadData(loadMore) {
@@ -206,6 +226,7 @@ class TrendingTab extends Component<Props> {
             });
         } else {
             onRefreshTrending(this.storeName, url, PAGE_SIZE);
+            console.log(`onRefreshTrending --${this.timeSpan.searchText}--${this.storeName}`)
         }
 
     }
