@@ -5,11 +5,12 @@
  * @data 2021/10/22 16:09
  */
 import React from "react";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {DeviceInfo, StyleSheet, TouchableOpacity, View} from "react-native";
 import NavigationBar from "../../common/NavigationBar";
 import ViewUtil from "../../util/ViewUtil";
 import NavigationUtil from "../../navigator/NavigationUtil";
 import IconFont from "../../res/iconfont";
+import WebView from "react-native-webview";
 
 const Theme_COLOR = '#7dc5eb';
 type Props = {};
@@ -34,13 +35,25 @@ class DetailPage extends React.Component<Props> {
     }
 
     onBack() {
-        NavigationUtil.goBack(this.props.navigation);
+        if (this.state.canGoBack) {
+            this.webView.goBack();
+        } else {
+            NavigationUtil.goBack(this.props.navigation);
+        }
+
+
     }
 
     shareClick() {
         console.log("Share Click!")
     }
 
+    onNavigationStateChange(navState) {
+        this.setState({
+            canGoBack: navState.canGoBack,
+            url: navState.url,
+        })
+    }
 
     renderRightButton() {
         return (
@@ -61,6 +74,7 @@ class DetailPage extends React.Component<Props> {
     }
 
     render() {
+        const titleLayoutStyle = this.state.title.length > 20 ? {paddingRequired: 30} : null;
         let navigationBar =
             <NavigationBar
                 title={this.state.title}
@@ -74,7 +88,13 @@ class DetailPage extends React.Component<Props> {
             <View style={styles.container}>
                 {navigationBar}
                 <View style={styles.contentContainer}>
-                    <Text style={styles.text}>DetailPage</Text>
+                    <WebView
+                        ref={webView => this.webView = webView}
+                        source={{uri: this.state.url}}
+                        titleLayoutStyle={titleLayoutStyle}
+                        startInLoadingState={true}
+                        onNavigationStateChange={e => this.onNavigationStateChange(e)}
+                    />
                 </View>
             </View>
         );
@@ -85,11 +105,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#ffffff",
+        marginTop: DeviceInfo.isIPhoneX_deprecated ? 30 : 0,
     },
     contentContainer: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
     },
     text: {
         fontSize: 22,

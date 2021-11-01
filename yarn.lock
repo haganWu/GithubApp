@@ -2636,15 +2636,15 @@ escape-html@~1.0.3:
   resolved "https://registry.npmmirror.com/escape-html/download/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
   integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
+escape-string-regexp@2.0.0, escape-string-regexp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmmirror.com/escape-string-regexp/download/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
+  integrity sha1-owME6Z2qMuI7L9IPUbq9B8/8o0Q=
+
 escape-string-regexp@^1.0.5:
   version "1.0.5"
   resolved "https://registry.npmmirror.com/escape-string-regexp/download/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
-
-escape-string-regexp@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmmirror.com/escape-string-regexp/download/escape-string-regexp-2.0.0.tgz#a30304e99daa32e23b2fd20f51babd07cffca344"
-  integrity sha1-owME6Z2qMuI7L9IPUbq9B8/8o0Q=
 
 escape-string-regexp@^4.0.0:
   version "4.0.0"
@@ -3491,7 +3491,7 @@ interpret@^1.0.0:
   resolved "https://registry.npmmirror.com/interpret/download/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha1-Zlq4vE2iendKQFhOgS4+D6RbGh4=
 
-invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.npmmirror.com/invariant/download/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
@@ -5573,6 +5573,14 @@ react-native-tab-view@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmmirror.com/react-native-tab-view/download/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"
   integrity sha1-H416g1q09bGxQH7I3dwQU7U/o8Y=
+
+react-native-webview@^11.14.1:
+  version "11.14.1"
+  resolved "https://registry.npmmirror.com/react-native-webview/download/react-native-webview-11.14.1.tgz#9315df7d3c818583a51f4c19b27c737d9a8c54c8"
+  integrity sha1-kxXffTyBhYOlH0wZsnxzfZqMVMg=
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
 
 react-native@0.64.1:
   version "0.64.1"
