@@ -27,7 +27,7 @@ class AppNavigators extends Component {
                     <Stack.Screen name="HomePage" component={HomePage}
                                   options={{headerShown: false}}/>
                     <Stack.Screen name="DetailPage" component={DetailPage}
-                                  options={{headerShown: true}}/>
+                                  options={{headerShown: false}}/>
                     <Stack.Screen name="FetchDemo" component={FetchDemo}
                                   options={{headerShown: true}}/>
                     <Stack.Screen name="AsyncStorageDemo" component={AsyncStorageDemo}

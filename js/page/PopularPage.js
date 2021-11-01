@@ -187,6 +187,7 @@ class PopularTab extends Component<Props> {
     }
 
     onItemClick(item) {
+        console.log(`onItemClick->${item['html_url']}`)
     }
 
     onCollectionClick(item) {
@@ -196,8 +197,9 @@ class PopularTab extends Component<Props> {
     renderItem(data) {
         const item = data.item;
         return (
-            <PopularItem item={item} onItemClick={this.onItemClick(item)}
-                         onCollectionClick={this.onCollectionClick(item)}/>
+        //     onItemClick={this.onItemClick(item)}
+            // onCollectionClick={this.onCollectionClick(item)}
+            <PopularItem item={item}/>
         );
     }
 

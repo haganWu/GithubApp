@@ -7,8 +7,18 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import IconFont from "../res/iconfont";
+import NavigationUtil from "../navigator/NavigationUtil";
 
 class PopularItem extends React.Component {
+
+
+    goToDetail(item) {
+        //导航传值
+        NavigationUtil.goPage({
+            projectModel: item,
+        }, "DetailPage");
+    }
+
     render() {
         const {item} = this.props;
         if (!item || !item["owner"]) {
@@ -16,11 +26,15 @@ class PopularItem extends React.Component {
         }
         return (
             <TouchableOpacity
-                onPress={this.props.onItemClick}
+                onPress={() => {
+                    console.log(`trans --> detailUrl:${item["html_url"]}`);
+                    this.goToDetail(item);
+                }}
             >
                 <View style={styles.itemContainer}>
                     <Text style={styles.fullNameText}>{item["full_name"]}</Text>
-                    <Text ellipsizeMode={'tail'} numberOfLines={3} style={styles.descriptionText}>{item["description"]}</Text>
+                    <Text ellipsizeMode={'tail'} numberOfLines={3}
+                          style={styles.descriptionText}>{item["description"]}</Text>
 
                     <View style={styles.bottomContainer}>
                         <Text style={styles.authorText}>Author:</Text>
@@ -35,6 +49,7 @@ class PopularItem extends React.Component {
             </TouchableOpacity>
         );
     }
+
 }
 
 const styles = StyleSheet.create({

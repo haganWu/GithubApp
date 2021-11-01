@@ -5,6 +5,8 @@ import { FunctionComponent } from 'react';
 import { ViewProps } from 'react-native';
 import { GProps } from 'react-native-svg';
 
+export { default as IconShare } from './IconShare';
+export { default as IconBack } from './IconBack';
 export { default as IconTriangleDown } from './IconTriangleDown';
 export { default as IconTriangleUp } from './IconTriangleUp';
 export { default as IconCollection } from './IconCollection';
@@ -17,7 +19,7 @@ export { default as IconCollectionActive } from './IconCollectionActive';
 export { default as IconGithub } from './IconGithub';
 
 interface Props extends GProps, ViewProps {
-  name: 'triangle-down' | 'triangle-up' | 'collection' | 'welcome' | 'github1' | 'tendency' | 'hot' | 'mine' | 'collectionActive' | 'github';
+  name: 'share' | 'back' | 'triangle-down' | 'triangle-up' | 'collection' | 'welcome' | 'github1' | 'tendency' | 'hot' | 'mine' | 'collectionActive' | 'github';
   size?: number;
   color?: string | string[];
 }
