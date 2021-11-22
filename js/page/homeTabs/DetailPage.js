@@ -11,6 +11,7 @@ import ViewUtil from "../../util/ViewUtil";
 import NavigationUtil from "../../navigator/NavigationUtil";
 import IconFont from "../../res/iconfont";
 import WebView from "react-native-webview";
+import BackPressComponent from "../../common/BackPressComponent";
 
 const Theme_COLOR = '#7dc5eb';
 type Props = {};
@@ -23,7 +24,7 @@ class DetailPage extends React.Component<Props> {
         //导航接收值
         this.params = this.props.route.params;
         const {projectModel} = this.params;
-        const title = projectModel['full_name'];
+        const title = projectModel['full_name'] || projectModel.item['full_name'];
         this.url = projectModel['html_url'] || TRENDING_URL + projectModel.fullName;
         console.log(`DetailPage -> title:${title}, url:${this.url}`);
 
@@ -32,9 +33,19 @@ class DetailPage extends React.Component<Props> {
             url: this.url,
             canGoBack: false,
         }
+        this.backPress = new BackPressComponent({backPress: () => this.onBackPress()})
     }
 
-    onBack() {
+    componentDidMount() {
+        this.backPress.componentDidMount();
+    }
+
+    componentWillUnmount() {
+        this.backPress.componentWillUnmount();
+    }
+
+
+    onBackPress() {
         if (this.state.canGoBack) {
             this.webView.goBack();
         } else {
@@ -80,7 +91,7 @@ class DetailPage extends React.Component<Props> {
                 title={this.state.title}
                 style={{backgroundColor: Theme_COLOR}}
                 leftButton={ViewUtil.getLeftBackButton(() => {
-                    this.onBack()
+                    this.onBackPress()
                 })}
                 rightButton={this.renderRightButton()}
             />

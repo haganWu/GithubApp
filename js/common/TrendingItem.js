@@ -8,8 +8,18 @@ import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import IconFont from "../res/iconfont";
 import HTMLView from "react-native-htmlview"
+import NavigationUtil from "../navigator/NavigationUtil";
 
 class TrendingItem extends React.Component {
+
+
+    goToDetail(item) {
+        //导航传值
+        NavigationUtil.goPage({
+            projectModel: item,
+        }, "DetailPage");
+    }
+
     render() {
         const {item} = this.props;
         if (!item) {
@@ -18,7 +28,9 @@ class TrendingItem extends React.Component {
         let descriptionContent = '<p>' + item["description"] + '</p>'
         return (
             <TouchableOpacity
-                onPress={this.props.onItemClick}
+                onPress={() => {
+                    this.goToDetail(item);
+                }}
             >
                 <View style={styles.itemContainer}>
                     <Text style={styles.fullNameText}>{item["fullName"]}</Text>

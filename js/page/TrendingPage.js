@@ -254,8 +254,6 @@ class TrendingTab extends Component<Props> {
         return URL + key + QUERY_STR + timeSpan.searchText;
     }
 
-    onItemClick(item) {
-    }
 
     onCollectionClick(item) {
     }
@@ -264,8 +262,7 @@ class TrendingTab extends Component<Props> {
     renderItem(data) {
         const item = data.item;
         return (
-            <TrendingItem item={item} onItemClick={this.onItemClick(item)}
-                          onCollectionClick={this.onCollectionClick(item)}/>
+            <TrendingItem item={item} onCollectionClick={this.onCollectionClick(item)}/>
         );
     }
 

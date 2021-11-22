@@ -27,7 +27,6 @@ class PopularItem extends React.Component {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    console.log(`trans --> detailUrl:${item["html_url"]}`);
                     this.goToDetail(item);
                 }}
             >
