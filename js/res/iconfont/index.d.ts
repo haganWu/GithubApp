@@ -9,6 +9,7 @@ export { default as IconShare } from './IconShare';
 export { default as IconBack } from './IconBack';
 export { default as IconTriangleDown } from './IconTriangleDown';
 export { default as IconTriangleUp } from './IconTriangleUp';
+export { default as IconCollectionSelected } from './IconCollectionSelected';
 export { default as IconCollection } from './IconCollection';
 export { default as IconWelcome } from './IconWelcome';
 export { default as IconGithub1 } from './IconGithub1';
@@ -19,7 +20,7 @@ export { default as IconCollectionActive } from './IconCollectionActive';
 export { default as IconGithub } from './IconGithub';
 
 interface Props extends GProps, ViewProps {
-  name: 'share' | 'back' | 'triangle-down' | 'triangle-up' | 'collection' | 'welcome' | 'github1' | 'tendency' | 'hot' | 'mine' | 'collectionActive' | 'github';
+  name: 'share' | 'back' | 'triangle-down' | 'triangle-up' | 'collection-selected' | 'collection' | 'welcome' | 'github1' | 'tendency' | 'hot' | 'mine' | 'collectionActive' | 'github';
   size?: number;
   color?: string | string[];
 }

@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import PopularItem from "../common/PopularItem";
 import Toast from 'react-native-easy-toast';
 import NavigationBar from "../common/NavigationBar";
+import NavigationUtil from "../navigator/NavigationUtil";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars'
@@ -186,20 +187,23 @@ class PopularTab extends Component<Props> {
         return URL + key + QUERY_STR;
     }
 
-    onItemClick(item) {
-        console.log(`onItemClick->${item['html_url']}`)
-    }
-
-    onCollectionClick(item) {
-    }
-
 
     renderItem(data) {
         const item = data.item;
         return (
-        //     onItemClick={this.onItemClick(item)}
-            // onCollectionClick={this.onCollectionClick(item)}
-            <PopularItem item={item}/>
+            <PopularItem
+                projectModel={item}
+                onSelect={(callback) => {
+                    //导航传值
+                    NavigationUtil.goPage({
+                        projectModel: item,
+                        callback,
+                    }, "DetailPage");
+                }}
+                onFavorite={(item, isFavorite) => {
+                    console.log(`PP点击收藏：isFavorite:${isFavorite}`);
+                }}
+            />
         );
     }
 

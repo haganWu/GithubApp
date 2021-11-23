@@ -25,6 +25,7 @@ import Toast from 'react-native-easy-toast';
 import NavigationBar from "../common/NavigationBar";
 import TrendingDialog, {TIME_SPANS} from "../common/TrendingDialog";
 import IconFont from "../res/iconfont";
+import NavigationUtil from "../navigator/NavigationUtil";
 
 const URL = 'https://github.com/trending/';
 const QUERY_STR = '?since='
@@ -255,14 +256,22 @@ class TrendingTab extends Component<Props> {
     }
 
 
-    onCollectionClick(item) {
-    }
-
-
     renderItem(data) {
         const item = data.item;
         return (
-            <TrendingItem item={item} onCollectionClick={this.onCollectionClick(item)}/>
+            <TrendingItem
+                projectModel={item}
+                onSelect={(callback) => {
+                    //导航传值
+                    NavigationUtil.goPage({
+                        projectModel: item,
+                        callback,
+                    }, "DetailPage");
+                }}
+                onFavorite={(item, isFavorite) => {
+                    console.log(`TP点击收藏：isFavorite:${isFavorite}`);
+                }}
+            />
         );
     }
 

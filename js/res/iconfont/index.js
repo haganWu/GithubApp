@@ -6,6 +6,7 @@ import IconShare from './IconShare';
 import IconBack from './IconBack';
 import IconTriangleDown from './IconTriangleDown';
 import IconTriangleUp from './IconTriangleUp';
+import IconCollectionSelected from './IconCollectionSelected';
 import IconCollection from './IconCollection';
 import IconWelcome from './IconWelcome';
 import IconGithub1 from './IconGithub1';
@@ -18,6 +19,7 @@ export { default as IconShare } from './IconShare';
 export { default as IconBack } from './IconBack';
 export { default as IconTriangleDown } from './IconTriangleDown';
 export { default as IconTriangleUp } from './IconTriangleUp';
+export { default as IconCollectionSelected } from './IconCollectionSelected';
 export { default as IconCollection } from './IconCollection';
 export { default as IconWelcome } from './IconWelcome';
 export { default as IconGithub1 } from './IconGithub1';
@@ -37,22 +39,24 @@ let IconFont = ({ name, ...rest }) => {
       return <IconTriangleDown key="3" {...rest} />;
     case 'triangle-up':
       return <IconTriangleUp key="4" {...rest} />;
+    case 'collection-selected':
+      return <IconCollectionSelected key="5" {...rest} />;
     case 'collection':
-      return <IconCollection key="5" {...rest} />;
+      return <IconCollection key="6" {...rest} />;
     case 'welcome':
-      return <IconWelcome key="6" {...rest} />;
+      return <IconWelcome key="7" {...rest} />;
     case 'github1':
-      return <IconGithub1 key="7" {...rest} />;
+      return <IconGithub1 key="8" {...rest} />;
     case 'tendency':
-      return <IconTendency key="8" {...rest} />;
+      return <IconTendency key="9" {...rest} />;
     case 'hot':
-      return <IconHot key="9" {...rest} />;
+      return <IconHot key="10" {...rest} />;
     case 'mine':
-      return <IconMine key="10" {...rest} />;
+      return <IconMine key="11" {...rest} />;
     case 'collectionActive':
-      return <IconCollectionActive key="11" {...rest} />;
+      return <IconCollectionActive key="12" {...rest} />;
     case 'github':
-      return <IconGithub key="12" {...rest} />;
+      return <IconGithub key="13" {...rest} />;
   }
 
   return null;

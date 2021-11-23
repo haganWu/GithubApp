@@ -6,43 +6,32 @@
  */
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import IconFont from "../res/iconfont";
-import NavigationUtil from "../navigator/NavigationUtil";
+import BaseItem from "./BaseItem";
 
-class PopularItem extends React.Component {
+class PopularItem extends BaseItem {
 
-
-    goToDetail(item) {
-        //导航传值
-        NavigationUtil.goPage({
-            projectModel: item,
-        }, "DetailPage");
-    }
 
     render() {
-        const {item} = this.props;
-        if (!item || !item["owner"]) {
+        const {projectModel} = this.props;
+        if (!projectModel || !projectModel["owner"]) {
             return null;
         }
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.goToDetail(item);
+                    this.onItemClick();
                 }}
             >
                 <View style={styles.itemContainer}>
-                    <Text style={styles.fullNameText}>{item["full_name"]}</Text>
+                    <Text style={styles.fullNameText}>{projectModel["full_name"]}</Text>
                     <Text ellipsizeMode={'tail'} numberOfLines={3}
-                          style={styles.descriptionText}>{item["description"]}</Text>
+                          style={styles.descriptionText}>{projectModel["description"]}</Text>
 
                     <View style={styles.bottomContainer}>
                         <Text style={styles.authorText}>Author:</Text>
-                        <Image source={{uri: item["owner"]["avatar_url"]}} style={styles.avatarImage}/>
-                        <Text style={styles.startText}>Start:{item["stargazers_count"]}</Text>
-                        <TouchableOpacity onPress={this.props.onCollectionClick}>
-                            <IconFont name={'collection'} size={30}/>
-                        </TouchableOpacity>
-
+                        <Image source={{uri: projectModel["owner"]["avatar_url"]}} style={styles.avatarImage}/>
+                        <Text style={styles.startText}>Start:{projectModel["stargazers_count"]}</Text>
+                        {this._favoriteIcon()}
                     </View>
                 </View>
             </TouchableOpacity>

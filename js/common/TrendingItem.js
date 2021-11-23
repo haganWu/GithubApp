@@ -6,11 +6,11 @@
  */
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import IconFont from "../res/iconfont";
 import HTMLView from "react-native-htmlview"
 import NavigationUtil from "../navigator/NavigationUtil";
+import BaseItem from "./BaseItem";
 
-class TrendingItem extends React.Component {
+class TrendingItem extends BaseItem {
 
 
     goToDetail(item) {
@@ -21,30 +21,30 @@ class TrendingItem extends React.Component {
     }
 
     render() {
-        const {item} = this.props;
-        if (!item) {
+        const {projectModel} = this.props;
+        if (!projectModel) {
             return null;
         }
-        let descriptionContent = '<p>' + item["description"] + '</p>'
+        let descriptionContent = '<p>' + projectModel["description"] + '</p>'
         return (
             <TouchableOpacity
                 onPress={() => {
-                    this.goToDetail(item);
+                    this.onItemClick()
                 }}
             >
                 <View style={styles.itemContainer}>
-                    <Text style={styles.fullNameText}>{item["fullName"]}</Text>
+                    <Text style={styles.fullNameText}>{projectModel["fullName"]}</Text>
                     <HTMLView
                         value={descriptionContent}
                     />
                     <Text ellipsizeMode={'tail'} numberOfLines={3}
-                          style={styles.descriptionText}>{item["meta"]}  </Text>
+                          style={styles.descriptionText}>{projectModel["meta"]}  </Text>
 
                     <View style={styles.bottomContainer}>
                         <View style={styles.contributorsContainer}>
                             <Text style={styles.authorText}>Contributors:</Text>
                             {
-                                item.contributors.slice(0, item.contributors.length <= 3 ? item.contributors.length : 3).map((result, i, arr) => {
+                                projectModel.contributors.slice(0, projectModel.contributors.length <= 3 ? projectModel.contributors.length : 3).map((result, i, arr) => {
                                     return <Image
                                         key={i}
                                         source={{uri: arr[i]}}
@@ -53,10 +53,7 @@ class TrendingItem extends React.Component {
                                 })
                             }
                         </View>
-                        <TouchableOpacity onPress={this.props.onCollectionClick}>
-                            <IconFont name={'collection'} size={30}/>
-                        </TouchableOpacity>
-
+                        {this._favoriteIcon()}
                     </View>
                 </View>
             </TouchableOpacity>
