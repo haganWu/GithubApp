@@ -24,7 +24,7 @@ class DetailPage extends React.Component<Props> {
         //导航接收值
         this.params = this.props.route.params;
         const {projectModel} = this.params;
-        const title = projectModel['full_name'] || projectModel.item['full_name'];
+        const title = projectModel['full_name'] || projectModel['fullName'];
         this.url = projectModel['html_url'] || TRENDING_URL + projectModel.fullName;
         console.log(`DetailPage -> title:${title}, url:${this.url}`);
 
