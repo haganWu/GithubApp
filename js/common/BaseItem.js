@@ -53,7 +53,7 @@ export default class BaseItem extends React.Component {
     onItemClick() {
         if (this.props.onSelect) {
             this.props.onSelect(isFavorite => {
-                //callback 实现
+                //callback 实现 从详情页返回列表时刷新“收藏”按钮状态
                 this.setFavoriteState(isFavorite);
             });
         }

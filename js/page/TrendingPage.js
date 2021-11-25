@@ -270,7 +270,8 @@ class TrendingTab extends Component<Props> {
                     //导航传值
                     NavigationUtil.goPage({
                         projectModel: item,
-                        callback,
+                        flag: FLAG_STORAGE.flag_trending,
+                        callback: callback,
                     }, "DetailPage");
                 }}
                 onFavorite={(item, isFavorite) => {

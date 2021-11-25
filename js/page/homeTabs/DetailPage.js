@@ -12,6 +12,7 @@ import NavigationUtil from "../../navigator/NavigationUtil";
 import IconFont from "../../res/iconfont";
 import WebView from "react-native-webview";
 import BackPressComponent from "../../common/BackPressComponent";
+import FavoriteDao from "../../expand/dao/FavoriteDao";
 
 const Theme_COLOR = '#7dc5eb';
 type Props = {};
@@ -23,7 +24,8 @@ class DetailPage extends React.Component<Props> {
         super(props);
         //导航接收值
         this.params = this.props.route.params;
-        const {projectModel} = this.params;
+        const {projectModel, flag} = this.params;
+        this.favoriteDao = new FavoriteDao(flag);
         const item = projectModel.item;
         const title = item['full_name'] || item['fullName'];
         this.url = item['html_url'] || TRENDING_URL + item.fullName;
@@ -33,6 +35,7 @@ class DetailPage extends React.Component<Props> {
             title: title,
             url: this.url,
             canGoBack: false,
+            isFavorite: projectModel.isFavorite
         }
         this.backPress = new BackPressComponent({backPress: () => this.onBackPress()})
     }
@@ -67,16 +70,41 @@ class DetailPage extends React.Component<Props> {
         })
     }
 
+    /**
+     * 更新组件当前的收藏状态
+     */
+    onFavoriteClick() {
+        const {projectModel, callback} = this.params;
+        const isFavorite = projectModel.isFavorite = !projectModel.isFavorite;
+        if (callback && typeof callback == 'function') {
+            callback(isFavorite);
+        }
+        this.setState({
+            isFavorite: isFavorite,
+        })
+        let key = projectModel.item.id.toString();
+        if (projectModel.isFavorite) {
+            this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item));
+        } else {
+            this.favoriteDao.removeFavoriteItem(key);
+        }
+
+    }
+
     renderRightButton() {
         return (
             <View style={styles.rightButtonContainer}>
                 <TouchableOpacity
                     style={styles.rightButton}
                     onPress={() => {
-                        console.log("Collection Click!")
+                        this.onFavoriteClick();
                     }}
                 >
-                    <IconFont name={'collection'} color={'white'} size={26}/>
+                    <IconFont
+                        name={'collection'}
+                        color={this.state.isFavorite ? '#1296db' : '#333333'}
+                        size={26}
+                    />
                 </TouchableOpacity>
                 {ViewUtil.getShareButton(() => {
                     this.shareClick()

@@ -201,7 +201,8 @@ class PopularTab extends Component<Props> {
                     //导航传值
                     NavigationUtil.goPage({
                         projectModel: item,
-                        callback,
+                        flag: FLAG_STORAGE.flag_popular,
+                        callback: callback,
                     }, "DetailPage");
                 }}
                 onFavorite={(item, isFavorite) => {
