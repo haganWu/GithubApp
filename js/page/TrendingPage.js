@@ -26,12 +26,17 @@ import NavigationBar from "../common/NavigationBar";
 import TrendingDialog, {TIME_SPANS} from "../common/TrendingDialog";
 import IconFont from "../res/iconfont";
 import NavigationUtil from "../navigator/NavigationUtil";
+import FavoriteUtil from "../util/FavoriteUtil";
+import {FLAG_STORAGE} from "../expand/dao/DataStore";
+import FavoriteDao from "../expand/dao/FavoriteDao";
 
 const URL = 'https://github.com/trending/';
 const QUERY_STR = '?since='
 const Theme_COLOR = '#7dc5eb';
 const PAGE_SIZE = 10;
 const EVENT_TYPE_TIME_SPAN_CHANGE = 'EVENT_TYPE_TIME_SPAN_CHANGE';
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_trending);
+
 type Props = {}
 const Tab = createMaterialTopTabNavigator();
 
@@ -222,11 +227,11 @@ class TrendingTab extends Component<Props> {
         const store = this._store();
         const url = this.genFetchUrl(this.storeName, this.timeSpan);
         if (loadMore) {
-            onLoadMoreTrending(this.storeName, ++store.pageIndex, PAGE_SIZE, store.items, () => {
+            onLoadMoreTrending(this.storeName, ++store.pageIndex, PAGE_SIZE, store.items, favoriteDao, () => {
                 this.refs.toast.show('没有更多了');
             });
         } else {
-            onRefreshTrending(this.storeName, url, PAGE_SIZE);
+            onRefreshTrending(this.storeName, url, PAGE_SIZE, favoriteDao);
             console.log(`onRefreshTrending --${this.timeSpan.searchText}--${this.storeName}`)
         }
 
@@ -269,7 +274,8 @@ class TrendingTab extends Component<Props> {
                     }, "DetailPage");
                 }}
                 onFavorite={(item, isFavorite) => {
-                    console.log(`TP点击收藏：isFavorite:${isFavorite}`);
+                    console.log(`TP点击收藏：isFavorite:${isFavorite},item:${item.fullName}`);
+                    FavoriteUtil.onFavorite(favoriteDao, item, isFavorite)
                 }}
             />
         );
@@ -295,7 +301,7 @@ class TrendingTab extends Component<Props> {
                 <FlatList
                     data={store.projectModes}
                     renderItem={data => this.renderItem(data)}
-                    keyExtractor={item => "" + (item.id || item.fullName)}
+                    keyExtractor={item => "" + (item.item.id || item.item.fullName)}
                     refreshControl={
                         <RefreshControl
                             title={'loading'}
@@ -334,8 +340,8 @@ const mapStateToProps = state => ({
  * @returns {{onLoadTrendingData: (function(*=, *=): *)}}
  */
 const mapDispatchToProps = dispatch => ({
-    onRefreshTrending: (storeName, url, pageSize) => dispatch(actions.onRefreshTrending(storeName, url, pageSize)),
-    onLoadMoreTrending: (storeName, pageIndex, pageSize, items, callBack) => dispatch(actions.onLoadMoreTrending(storeName, pageIndex, pageSize, items, callBack)),
+    onRefreshTrending: (storeName, url, pageSize, favoriteDao) => dispatch(actions.onRefreshTrending(storeName, url, pageSize, favoriteDao)),
+    onLoadMoreTrending: (storeName, pageIndex, pageSize, items, favoriteDao, callBack) => dispatch(actions.onLoadMoreTrending(storeName, pageIndex, pageSize, items, favoriteDao, callBack)),
 })
 //connect只是一个function，并不一定非要放在export default 后面。
 const TrendingTabPage = connect(mapStateToProps, mapDispatchToProps)(TrendingTab);

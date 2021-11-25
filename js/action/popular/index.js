@@ -6,14 +6,14 @@
  */
 import Types from "../types"
 import DataStore, {FLAG_STORAGE} from "../../expand/dao/DataStore";
-import dealWithData from "../ActionUtil";
+import dealWithData, {_projectModels} from "../ActionUtil";
 
 /**
  * @description  发送请求（由PopularPage页面中发起） 获取最热数据的异步action(action数据会流转到reducer)
  * @author HaganWu
  * @data 2021/10/27  10:22
  */
-export function onLoadPopularData(storeName, url, pageSize) {
+export function onLoadPopularData(storeName, url, pageSize, favoriteDao) {
     return dispatch => {
         dispatch({
             type: Types.POPULAR_REFRESH,
@@ -23,7 +23,7 @@ export function onLoadPopularData(storeName, url, pageSize) {
         let dataStore = new DataStore();
         dataStore.fetchData(url, FLAG_STORAGE.flag_popular)//异步action与数据流
             .then(data => {
-                dealWithData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, data, pageSize);
+                dealWithData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, data, pageSize, favoriteDao,favoriteDao);
             })
             .catch(error => {
                 console.log(error);
@@ -42,7 +42,7 @@ export function onLoadPopularData(storeName, url, pageSize) {
  * @fileName index.js
  * @data 2021/10/28  9:49
  */
-export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = [], callBack) {
+export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = [], favoriteDao, callBack) {
     return dispatch => {
         setTimeout(() => {
             if ((pageIndex - 1) * pageSize >= dataArray.length) {//已加载完全部数据
@@ -57,12 +57,15 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
                 })
             } else {
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
-                dispatch({
-                    type: Types.POPULAR_LOAD_MORE_SUCCESS,
-                    storeName: storeName,
-                    pageIndex: pageIndex,
-                    projectModes: dataArray.slice(0, max),
+                _projectModels(dataArray.slice(0, max), favoriteDao, projectModes => {
+                    dispatch({
+                        type: Types.POPULAR_LOAD_MORE_SUCCESS,
+                        storeName: storeName,
+                        pageIndex: pageIndex,
+                        projectModes: projectModes,
+                    })
                 })
+
             }
         }, 200);
     }

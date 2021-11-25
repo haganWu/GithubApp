@@ -15,11 +15,15 @@ import PopularItem from "../common/PopularItem";
 import Toast from 'react-native-easy-toast';
 import NavigationBar from "../common/NavigationBar";
 import NavigationUtil from "../navigator/NavigationUtil";
+import FavoriteDao from "../expand/dao/FavoriteDao";
+import {FLAG_STORAGE} from "../expand/dao/DataStore";
+import FavoriteUtil from "../util/FavoriteUtil";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars'
 const Theme_COLOR = '#7dc5eb';
 const PAGE_SIZE = 10;
+const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 
 type Props = {}
 const Tab = createMaterialTopTabNavigator();
@@ -155,11 +159,11 @@ class PopularTab extends Component<Props> {
         const store = this._store();
         const url = this.genFetchUrl(this.storeName);
         if (loadMore) {
-            onLoadMorePopular(this.storeName, ++store.pageIndex, PAGE_SIZE, store.items, () => {
+            onLoadMorePopular(this.storeName, ++store.pageIndex, PAGE_SIZE, store.items, favoriteDao, () => {
                 this.refs.toast.show('没有更多了');
             });
         } else {
-            onLoadPopularData(this.storeName, url, PAGE_SIZE);
+            onLoadPopularData(this.storeName, url, PAGE_SIZE, favoriteDao);
         }
 
     }
@@ -202,6 +206,7 @@ class PopularTab extends Component<Props> {
                 }}
                 onFavorite={(item, isFavorite) => {
                     console.log(`PP点击收藏：isFavorite:${isFavorite}`);
+                    FavoriteUtil.onFavorite(favoriteDao, item, isFavorite)
                 }}
             />
         );
@@ -227,7 +232,7 @@ class PopularTab extends Component<Props> {
                 <FlatList
                     data={store.projectModes}
                     renderItem={data => this.renderItem(data)}
-                    keyExtractor={item => "" + item.id}
+                    keyExtractor={item => "" + item.item.id}
                     refreshControl={
                         <RefreshControl
                             title={'loading'}
@@ -276,8 +281,8 @@ const mapStateToProps = state => ({
  * @returns {{onLoadPopularData: (function(*=, *=): *)}}
  */
 const mapDispatchToProps = dispatch => ({
-    onLoadPopularData: (storeName, url, pageSize) => dispatch(actions.onLoadPopularData(storeName, url, pageSize)),
-    onLoadMorePopular: (storeName, pageIndex, pageSize, items, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, callBack)),
+    onLoadPopularData: (storeName, url, pageSize, favoriteDao) => dispatch(actions.onLoadPopularData(storeName, url, pageSize, favoriteDao)),
+    onLoadMorePopular: (storeName, pageIndex, pageSize, items, favoriteDao, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, favoriteDao, callBack)),
 })
 //connect只是一个function，并不一定非要放在export default 后面。
 const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab);

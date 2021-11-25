@@ -7,25 +7,17 @@
 import React from "react";
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import HTMLView from "react-native-htmlview"
-import NavigationUtil from "../navigator/NavigationUtil";
 import BaseItem from "./BaseItem";
 
 class TrendingItem extends BaseItem {
 
-
-    goToDetail(item) {
-        //导航传值
-        NavigationUtil.goPage({
-            projectModel: item,
-        }, "DetailPage");
-    }
-
     render() {
         const {projectModel} = this.props;
-        if (!projectModel) {
+        const item = projectModel.item;
+        if (!item) {
             return null;
         }
-        let descriptionContent = '<p>' + projectModel["description"] + '</p>'
+        let descriptionContent = '<p>' + item["description"] + '</p>'
         return (
             <TouchableOpacity
                 onPress={() => {
@@ -33,18 +25,18 @@ class TrendingItem extends BaseItem {
                 }}
             >
                 <View style={styles.itemContainer}>
-                    <Text style={styles.fullNameText}>{projectModel["fullName"]}</Text>
+                    <Text style={styles.fullNameText}>{item["fullName"]}</Text>
                     <HTMLView
                         value={descriptionContent}
                     />
                     <Text ellipsizeMode={'tail'} numberOfLines={3}
-                          style={styles.descriptionText}>{projectModel["meta"]}  </Text>
+                          style={styles.descriptionText}>{item["meta"]}  </Text>
 
                     <View style={styles.bottomContainer}>
                         <View style={styles.contributorsContainer}>
                             <Text style={styles.authorText}>Contributors:</Text>
                             {
-                                projectModel.contributors.slice(0, projectModel.contributors.length <= 3 ? projectModel.contributors.length : 3).map((result, i, arr) => {
+                                item.contributors.slice(0, item.contributors.length <= 3 ? item.contributors.length : 3).map((result, i, arr) => {
                                     return <Image
                                         key={i}
                                         source={{uri: arr[i]}}

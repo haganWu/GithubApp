@@ -13,7 +13,8 @@ class PopularItem extends BaseItem {
 
     render() {
         const {projectModel} = this.props;
-        if (!projectModel || !projectModel["owner"]) {
+        const item = projectModel.item;
+        if (!item || !item["owner"]) {
             return null;
         }
         return (
@@ -23,14 +24,14 @@ class PopularItem extends BaseItem {
                 }}
             >
                 <View style={styles.itemContainer}>
-                    <Text style={styles.fullNameText}>{projectModel["full_name"]}</Text>
+                    <Text style={styles.fullNameText}>{item["full_name"]}</Text>
                     <Text ellipsizeMode={'tail'} numberOfLines={3}
-                          style={styles.descriptionText}>{projectModel["description"]}</Text>
+                          style={styles.descriptionText}>{item["description"]}</Text>
 
                     <View style={styles.bottomContainer}>
                         <Text style={styles.authorText}>Author:</Text>
-                        <Image source={{uri: projectModel["owner"]["avatar_url"]}} style={styles.avatarImage}/>
-                        <Text style={styles.startText}>Start:{projectModel["stargazers_count"]}</Text>
+                        <Image source={{uri: item["owner"]["avatar_url"]}} style={styles.avatarImage}/>
+                        <Text style={styles.startText}>Start:{item["stargazers_count"]}</Text>
                         {this._favoriteIcon()}
                     </View>
                 </View>
