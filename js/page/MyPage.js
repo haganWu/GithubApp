@@ -9,6 +9,8 @@ import {Component} from "react";
 import {Button, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import NavigationUtil from "../navigator/NavigationUtil";
 import NavigationBar from "../common/NavigationBar";
+import actions from "../action";
+import {connect} from "react-redux";
 
 const Theme_COLOR = '#7dc5eb';
 
@@ -85,6 +87,13 @@ class MyPage extends Component {
                         }
                         }/>
                     </TouchableOpacity>
+
+
+                    <View style={{marginTop: 30}}>
+                        <Button title={'修改主题颜色'} onPress={() => {
+                            this.props.onThemeChange('#faa');
+                        }}/>
+                    </View>
                 </View>
 
             </View>
@@ -119,4 +128,7 @@ const styles = StyleSheet.create({
         color: "#FFF",
     },
 });
-export default MyPage;
+const mapDispatchToProps = dispatch => ({
+    onThemeChange: theme => dispatch(actions.onThemeChange(theme)),
+})
+export default connect(null, mapDispatchToProps)(MyPage);
