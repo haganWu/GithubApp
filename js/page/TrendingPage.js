@@ -211,7 +211,7 @@ class TrendingTab extends Component<Props> {
         this.loadData(false);
         this.timeSpanChangeListener = DeviceEventEmitter.addListener(EVENT_TYPE_TIME_SPAN_CHANGE, (timeSpan) => {
             this.timeSpan = timeSpan;
-            console.log(`timeSpan had changed:${timeSpan.searchText}`)
+            // console.log(`timeSpan had changed:${timeSpan.searchText}`)
         });
     }
 
@@ -232,7 +232,7 @@ class TrendingTab extends Component<Props> {
             });
         } else {
             onRefreshTrending(this.storeName, url, PAGE_SIZE, favoriteDao);
-            console.log(`onRefreshTrending --${this.timeSpan.searchText}--${this.storeName}`)
+            // console.log(`onRefreshTrending --${this.timeSpan.searchText}--${this.storeName}`)
         }
 
     }
