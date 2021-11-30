@@ -23,7 +23,7 @@ export function onLoadPopularData(storeName, url, pageSize, favoriteDao) {
         let dataStore = new DataStore();
         dataStore.fetchData(url, FLAG_STORAGE.flag_popular)//异步action与数据流
             .then(data => {
-                dealWithData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, data, pageSize, favoriteDao,favoriteDao);
+                dealWithData(Types.POPULAR_REFRESH_SUCCESS, dispatch, storeName, data, pageSize, favoriteDao);
             })
             .catch(error => {
                 console.log(error);
@@ -71,4 +71,26 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
     }
 }
 
+
+/**
+ * 刷新收藏状态
+ * @param storeName
+ * @param pageIndex
+ * @param pageSize
+ * @param dataArray
+ * @param favoriteDao
+ */
+export function onFlushPopularFavoriteState(storeName, pageIndex, pageSize, dataArray = [], favoriteDao) {
+    return dispatch => {
+        let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
+        _projectModels(dataArray.slice(0, max), favoriteDao, projectModes => {
+            dispatch({
+                type: Types.PLUSH_POPULAR_FAVORITE_STATE,
+                storeName: storeName,
+                pageIndex: pageIndex,
+                projectModes: projectModes,
+            })
+        })
+    }
+}
 

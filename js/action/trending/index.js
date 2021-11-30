@@ -18,7 +18,7 @@ export function onRefreshTrending(storeName, url, pageSize, favoriteDao) {
         let dataStore = new DataStore();
         dataStore.fetchData(url, FLAG_STORAGE.flag_trending)//异步action与数据流
             .then(data => {
-                dealWithData(Types.TRENDING_REFRESH_SUCCESS, dispatch, storeName, data, pageSize, favoriteDao,favoriteDao);
+                dealWithData(Types.TRENDING_REFRESH_SUCCESS, dispatch, storeName, data, pageSize, favoriteDao);
             })
             .catch(error => {
                 console.log(error);
@@ -51,7 +51,7 @@ export function onLoadMoreTrending(storeName, pageIndex, pageSize, dataArray = [
                 })
             } else {
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
-                _projectModels(dataArray.slice(0, max), favoriteDao,favoriteDao,FLAG_STORAGE.flag_trending, projectModes => {
+                _projectModels(dataArray.slice(0, max), favoriteDao, favoriteDao, FLAG_STORAGE.flag_trending, projectModes => {
                     dispatch({
                         type: Types.TRENDING_LOAD_MORE_SUCCESS,
                         storeName: storeName,
