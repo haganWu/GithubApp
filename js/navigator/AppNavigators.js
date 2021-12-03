@@ -13,6 +13,7 @@ import DetailPage from "../page/homeTabs/DetailPage";
 import FetchDemo from "../page/demo/FetchDemo";
 import AsyncStorageDemo from "../page/demo/AsyncStorageDemo";
 import DataStoreDemo from "../page/demo/DataStoreDemo";
+import TestPage from "../page/TestPage";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,8 @@ class AppNavigators extends Component {
                     <Stack.Screen name="AsyncStorageDemo" component={AsyncStorageDemo}
                                   options={{headerShown: true}}/>
                     <Stack.Screen name="DataStoreDemo" component={DataStoreDemo}
+                                  options={{headerShown: true}}/>
+                    <Stack.Screen name="TestPage" component={TestPage}
                                   options={{headerShown: true}}/>
                 </Stack.Navigator>
 
