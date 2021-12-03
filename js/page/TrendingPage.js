@@ -29,6 +29,8 @@ import NavigationUtil from "../navigator/NavigationUtil";
 import FavoriteUtil from "../util/FavoriteUtil";
 import {FLAG_STORAGE} from "../expand/dao/DataStore";
 import FavoriteDao from "../expand/dao/FavoriteDao";
+import EventBus from "react-native-event-bus";
+import EventTypes from "../util/EventTypes";
 
 const URL = 'https://github.com/trending/';
 const QUERY_STR = '?since='
@@ -211,7 +213,10 @@ class TrendingTab extends Component<Props> {
         this.loadData(false);
         this.timeSpanChangeListener = DeviceEventEmitter.addListener(EVENT_TYPE_TIME_SPAN_CHANGE, (timeSpan) => {
             this.timeSpan = timeSpan;
-            // console.log(`timeSpan had changed:${timeSpan.searchText}`)
+        });
+        EventBus.getInstance().addListener(EventTypes.favorite_changed_trending, this.listener = data => {
+            console.log(`data:${data}`);
+            this.loadData(false);
         });
     }
 
@@ -219,6 +224,7 @@ class TrendingTab extends Component<Props> {
         if (this.timeSpanChangeListener !== null) {
             this.timeSpanChangeListener.remove();
         }
+        EventBus.getInstance().removeListener(this.listener);
     }
 
     loadData(loadMore) {
@@ -232,7 +238,6 @@ class TrendingTab extends Component<Props> {
             });
         } else {
             onRefreshTrending(this.storeName, url, PAGE_SIZE, favoriteDao);
-            // console.log(`onRefreshTrending --${this.timeSpan.searchText}--${this.storeName}`)
         }
 
     }
@@ -276,7 +281,7 @@ class TrendingTab extends Component<Props> {
                 }}
                 onFavorite={(item, isFavorite) => {
                     console.log(`TP点击收藏：isFavorite:${isFavorite},item:${item.fullName}`);
-                    FavoriteUtil.onFavorite(favoriteDao, item, isFavorite)
+                    FavoriteUtil.onFavorite(FLAG_STORAGE.flag_trending, favoriteDao, item, isFavorite)
                 }}
             />
         );
@@ -302,7 +307,7 @@ class TrendingTab extends Component<Props> {
                 <FlatList
                     data={store.projectModes}
                     renderItem={data => this.renderItem(data)}
-                    keyExtractor={item => "" + (item.item.id || item.item.fullName)}
+                    keyExtractor={item => "" + item.item.id + item.item["fullName"]}
                     refreshControl={
                         <RefreshControl
                             title={'loading'}

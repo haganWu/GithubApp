@@ -51,7 +51,6 @@ export async function _projectModels(showItems, favoriteDao, callback) {
     let keys = [];
     try {
         keys = await favoriteDao.getAllFavoriteKeys();
-        // console.log(`keys:${keys}`)
     } catch (e) {
         console.error(e);
     }

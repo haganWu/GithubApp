@@ -13,6 +13,7 @@ import IconFont from "../../res/iconfont";
 import WebView from "react-native-webview";
 import BackPressComponent from "../../common/BackPressComponent";
 import FavoriteDao from "../../expand/dao/FavoriteDao";
+import {FLAG_STORAGE} from "../../expand/dao/DataStore";
 
 const Theme_COLOR = '#7dc5eb';
 type Props = {};
@@ -29,7 +30,6 @@ class DetailPage extends React.Component<Props> {
         const item = projectModel.item;
         const title = item['full_name'] || item['fullName'];
         this.url = item['html_url'] || TRENDING_URL + item.fullName;
-        console.log(`DetailPage -> title:${title}, url:${this.url}`);
 
         this.state = {
             title: title,
@@ -74,7 +74,7 @@ class DetailPage extends React.Component<Props> {
      * 更新组件当前的收藏状态
      */
     onFavoriteClick() {
-        const {projectModel, callback} = this.params;
+        const {projectModel, callback, flag} = this.params;
         const isFavorite = projectModel.isFavorite = !projectModel.isFavorite;
         if (callback && typeof callback == 'function') {
             callback(isFavorite);
@@ -82,7 +82,8 @@ class DetailPage extends React.Component<Props> {
         this.setState({
             isFavorite: isFavorite,
         })
-        let key = projectModel.item.id.toString();
+        let key = flag === FLAG_STORAGE.flag_popular ? projectModel.item.id.toString() + projectModel.item["full_name"] :
+            projectModel.item.id.toString() + projectModel.item["fullName"];
         if (projectModel.isFavorite) {
             this.favoriteDao.saveFavoriteItem(key, JSON.stringify(projectModel.item));
         } else {

@@ -25,6 +25,7 @@ class FavoriteItem extends BaseItem {
             if (!item || !item["owner"]) {
                 return null;
             }
+            // console.log(`FavoriteItem popular show info -> name:${item["full_name"].toString()}, key:${item.id.toString()}`);
             itemView = <TouchableOpacity
                 onPress={() => {
                     this.onItemClick();
@@ -47,6 +48,7 @@ class FavoriteItem extends BaseItem {
             if (!item) {
                 return null;
             }
+            // console.log(`FavoriteItem trending show info -> name:${item["fullName"].toString()}, key:${item.id.toString()}`);
             let descriptionContent = '<p>' + item["description"] + '</p>'
             itemView = <TouchableOpacity
                 onPress={() => {

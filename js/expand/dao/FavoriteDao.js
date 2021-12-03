@@ -71,6 +71,7 @@ export default class FavoriteDao {
     removeFavoriteItem(key) {
         AsyncStorage.removeItem(key, (error) => {
             if (!error) {
+                console.log(`FavoriteDao 取消收藏--》key:${key}`);
                 this.updateFavoriteKeys(key, false);
             }
         });

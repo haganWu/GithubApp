@@ -76,6 +76,14 @@ export default function onAction(state = defaultState, action) {
                     pageIndex: action.pageIndex,
                 },
             }
+        case Types.PLUSH_POPULAR_FAVORITE_STATE://刷新收藏状态
+            return {
+                ...state,
+                [action.storeName]: {
+                    ...state[action.storeName],
+                    projectModes: action.projectModes,
+                },
+            }
         default:
             return state;
     }

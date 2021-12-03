@@ -5,7 +5,7 @@
  * @data 2021/10/25 14:54
  */
 import {onThemeChange} from './theme'
-import {onLoadPopularData, onLoadMorePopular} from './popular'
+import {onLoadPopularData, onLoadMorePopular, onFlushPopularFavoriteState} from './popular'
 import {onRefreshTrending, onLoadMoreTrending} from './trending'
 import {onLoadFavoriteData} from "./favorite";
 
@@ -16,4 +16,5 @@ export default {
     onRefreshTrending,
     onLoadMoreTrending,
     onLoadFavoriteData,
+    onFlushPopularFavoriteState,
 }
