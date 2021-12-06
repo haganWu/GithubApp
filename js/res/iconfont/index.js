@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import IconXiajiantou from './IconXiajiantou';
+import IconShangjiantou from './IconShangjiantou';
 import IconPaixu from './IconPaixu';
 import IconYoujiantou from './IconYoujiantou';
 import IconFenxiang from './IconFenxiang';
@@ -25,6 +27,8 @@ import IconHot from './IconHot';
 import IconMine from './IconMine';
 import IconCollectionActive from './IconCollectionActive';
 import IconGithub from './IconGithub';
+export { default as IconXiajiantou } from './IconXiajiantou';
+export { default as IconShangjiantou } from './IconShangjiantou';
 export { default as IconPaixu } from './IconPaixu';
 export { default as IconYoujiantou } from './IconYoujiantou';
 export { default as IconFenxiang } from './IconFenxiang';
@@ -51,52 +55,56 @@ export { default as IconGithub } from './IconGithub';
 
 let IconFont = ({ name, ...rest }) => {
   switch (name) {
+    case 'xiajiantou':
+      return <IconXiajiantou key="1" {...rest} />;
+    case 'shangjiantou':
+      return <IconShangjiantou key="2" {...rest} />;
     case 'paixu':
-      return <IconPaixu key="1" {...rest} />;
+      return <IconPaixu key="3" {...rest} />;
     case 'youjiantou':
-      return <IconYoujiantou key="2" {...rest} />;
+      return <IconYoujiantou key="4" {...rest} />;
     case 'fenxiang':
-      return <IconFenxiang key="3" {...rest} />;
+      return <IconFenxiang key="5" {...rest} />;
     case 'zuozhe':
-      return <IconZuozhe key="4" {...rest} />;
+      return <IconZuozhe key="6" {...rest} />;
     case 'guanyu':
-      return <IconGuanyu key="5" {...rest} />;
+      return <IconGuanyu key="7" {...rest} />;
     case 'wentifankui':
-      return <IconWentifankui key="6" {...rest} />;
+      return <IconWentifankui key="8" {...rest} />;
     case 'zidingyizhuti':
-      return <IconZidingyizhuti key="7" {...rest} />;
+      return <IconZidingyizhuti key="9" {...rest} />;
     case 'jiaocheng':
-      return <IconJiaocheng key="8" {...rest} />;
+      return <IconJiaocheng key="10" {...rest} />;
     case 'gouxuan':
-      return <IconGouxuan key="9" {...rest} />;
+      return <IconGouxuan key="11" {...rest} />;
     case 'yichu':
-      return <IconYichu key="10" {...rest} />;
+      return <IconYichu key="12" {...rest} />;
     case 'share':
-      return <IconShare key="11" {...rest} />;
+      return <IconShare key="13" {...rest} />;
     case 'back':
-      return <IconBack key="12" {...rest} />;
+      return <IconBack key="14" {...rest} />;
     case 'triangle-down':
-      return <IconTriangleDown key="13" {...rest} />;
+      return <IconTriangleDown key="15" {...rest} />;
     case 'triangle-up':
-      return <IconTriangleUp key="14" {...rest} />;
+      return <IconTriangleUp key="16" {...rest} />;
     case 'collection-selected':
-      return <IconCollectionSelected key="15" {...rest} />;
+      return <IconCollectionSelected key="17" {...rest} />;
     case 'collection':
-      return <IconCollection key="16" {...rest} />;
+      return <IconCollection key="18" {...rest} />;
     case 'welcome':
-      return <IconWelcome key="17" {...rest} />;
+      return <IconWelcome key="19" {...rest} />;
     case 'github1':
-      return <IconGithub1 key="18" {...rest} />;
+      return <IconGithub1 key="20" {...rest} />;
     case 'tendency':
-      return <IconTendency key="19" {...rest} />;
+      return <IconTendency key="21" {...rest} />;
     case 'hot':
-      return <IconHot key="20" {...rest} />;
+      return <IconHot key="22" {...rest} />;
     case 'mine':
-      return <IconMine key="21" {...rest} />;
+      return <IconMine key="23" {...rest} />;
     case 'collectionActive':
-      return <IconCollectionActive key="22" {...rest} />;
+      return <IconCollectionActive key="24" {...rest} />;
     case 'github':
-      return <IconGithub key="23" {...rest} />;
+      return <IconGithub key="25" {...rest} />;
   }
 
   return null;

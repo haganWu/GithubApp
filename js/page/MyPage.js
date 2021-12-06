@@ -18,7 +18,7 @@ const Theme_COLOR = '#7dc5eb';
 const CUSTOM_ABOUT_ITEM_ID = 0x0001;
 const TUTORIAL_ITEM_ID = 0x0002;
 const CUSTOM_LANGUAGE_ID = 0x0003;
-const SORT_LANGUAGE_ID = 0x0004 ;
+const SORT_LANGUAGE_ID = 0x0004;
 const CUSTOM_KEY_ID = 0x0005;
 const SORT_KEY_ID = 0x0006;
 const REMOVE_KEY_ID = 0x0007;
@@ -49,6 +49,11 @@ class MyPage extends Component {
                 break
             case TUTORIAL_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 教程`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                    title: "教程",
+                    url:"https://coding.imooc.com/class/304.html",
+                }, "WebViewPage");
                 break
             case CUSTOM_LANGUAGE_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 自定义语言`);

@@ -101,8 +101,9 @@ const styles = StyleSheet.create({
         marginLeft: 12,
     },
     divider: {
-        height: 0.3,
-        backgroundColor: '#eeeeee'
+        height: 0.5,
+        opacity: 0.5,
+        backgroundColor: 'darkgray'
     }
 })
 

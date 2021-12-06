@@ -14,6 +14,7 @@ import FetchDemo from "../page/demo/FetchDemo";
 import AsyncStorageDemo from "../page/demo/AsyncStorageDemo";
 import DataStoreDemo from "../page/demo/DataStoreDemo";
 import TestPage from "../page/TestPage";
+import WebViewPage from "../page/WebViewPage";
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,9 @@ class AppNavigators extends Component {
                                   options={{headerShown: false}}/>
                     <Stack.Screen name="DetailPage" component={DetailPage}
                                   options={{headerShown: false}}/>
+                    <Stack.Screen name="WebViewPage" component={WebViewPage}
+                                  options={{headerShown: false}}/>
+
                     <Stack.Screen name="FetchDemo" component={FetchDemo}
                                   options={{headerShown: true}}/>
                     <Stack.Screen name="AsyncStorageDemo" component={AsyncStorageDemo}
