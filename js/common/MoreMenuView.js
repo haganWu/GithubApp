@@ -60,7 +60,7 @@ class MoreMenuView extends React.Component {
                             backgroundColor: "#eeeeee",
                             justifyContent: "center",
                             paddingVertical: 4,
-                            paddingHorizontal: 4
+                            paddingHorizontal: 8
                         }}>
                             <Text style={{color: "#666666", fontSize: 12}}>{topGroupMark}</Text>
                         </View>
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flex: 1,
         alignItems: 'center',
-        paddingHorizontal: 12,
+        paddingHorizontal: 16,
         paddingVertical: 16,
         backgroundColor: '#ffffff',
     },

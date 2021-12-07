@@ -46,13 +46,16 @@ class MyPage extends Component {
         switch (itemId) {
             case CUSTOM_ABOUT_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} Mine`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                }, "AboutPage");
                 break
             case TUTORIAL_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 教程`);
                 NavigationUtil.goPage({
                     navigation: this.props.navigation,
                     title: "教程",
-                    url:"https://coding.imooc.com/class/304.html",
+                    url: "https://coding.imooc.com/class/304.html",
                 }, "WebViewPage");
                 break
             case CUSTOM_LANGUAGE_ID:
