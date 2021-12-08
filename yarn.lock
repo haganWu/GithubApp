@@ -947,6 +947,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@react-native-clipboard/clipboard@^1.9.0":
+  version "1.9.0"
+  resolved "https://registry.npmmirror.com/@react-native-clipboard/clipboard/download/@react-native-clipboard/clipboard-1.9.0.tgz#68d6a18545b1f986098d5fb1cd710b53c322e066"
+  integrity sha1-aNahhUWx+YYJjV+xzXELU8Mi4GY=
+
 "@react-native-community/cli-debugger-ui@^5.0.1":
   version "5.0.1"
   resolved "https://registry.npmmirror.com/@react-native-community/cli-debugger-ui/download/@react-native-community/cli-debugger-ui-5.0.1.tgz#6b1f3367b8e5211e899983065ea2e72c1901d75f"

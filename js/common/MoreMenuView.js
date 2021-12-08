@@ -59,9 +59,7 @@ class MoreMenuView extends React.Component<Props> {
      */
     onSubItemClick(item) {
         if (this.props.subItemClick) {
-            console.log(`onSubItemClick -> title:${item.title}`)
-            this.props.subItemClick();
-            return item.title;
+            this.props.subItemClick(item);
         }
     }
 
@@ -94,7 +92,7 @@ class MoreMenuView extends React.Component<Props> {
         if (haveSubItems) {
             for (let i = 0; i < subItems.length; i++) {
                 subItemComponents.push(
-                    <View>
+                    <View key={i}>
                         <TouchableOpacity
                             onPress={() => {
                                 this.onSubItemClick(subItems[i]);

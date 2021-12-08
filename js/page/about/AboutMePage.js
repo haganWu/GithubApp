@@ -11,6 +11,10 @@ import {connect} from "react-redux";
 import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
 import config from "../../res/data/config.json"
 import MoreMenuView from "../../common/MoreMenuView";
+import NavigationUtil from "../../navigator/NavigationUtil";
+import Utils from "../../util/Utils";
+import Toast from "react-native-easy-toast";
+import Clipboard from "@react-native-clipboard/clipboard";
 
 //父菜单点击标识
 //教程
@@ -135,46 +139,41 @@ class AboutMePage extends React.Component<Props> {
 
     /**
      * 子控件点击回调
-     * @param subClickItemTitle
+     * @param item
      */
-    onSubItemClickCallBack(subClickItemTitle) {
-        switch (subClickItemTitle) {
+    onSubItemClickCallBack(item) {
+        console.log(`onItemClickCallBack -> subClickItemTitle:${item.title}`);
+        switch (item.title) {
             case "React Native基础教程":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "React Native高级实战教程":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "个人博客":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "CSDN":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "简书":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "GitHub":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "慕课网":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
+                this.goToWebView(item);
                 break
             case "移动开发者技术分享群":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "React Native学习交流群":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
-                break
             case "QQ":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
+                //复制账号到剪切板
+                Clipboard.setString(item.account);
+                this.toast.show(`${item.title}"${item.account}" 已经复制到剪切板`);
                 break
             case "Email":
-                console.log(`onItemClickCallBack -> subClickItemTitle:${subClickItemTitle}`);
+                //发送邮件
+                const url = 'wuhh@csco.com.cn';
+                Utils.sendEmail(url);
                 break
         }
     }
 
+    goToWebView(item) {
+        NavigationUtil.goPage({
+            title: item.title,
+            url: item.url,
+        }, "WebViewPage");
+    }
 
     render() {
 
@@ -186,7 +185,7 @@ class AboutMePage extends React.Component<Props> {
                 showBottomDividerLine={true}
                 subItems={this.state.data.aboutMe.Tutorial.items}
                 itemClick={() => this.onItemClickCallBack(ABOUT_ME_TUTORIAL_ITEM_ID, this.state.showTutorial)}
-                subItemClick={(subClickItemTitle) => this.onSubItemClickCallBack(subClickItemTitle)}
+                subItemClick={(item) => this.onSubItemClickCallBack(item)}
                 showSubItems={this.state.showTutorial}
             />
             <MoreMenuView
@@ -196,7 +195,7 @@ class AboutMePage extends React.Component<Props> {
                 showBottomDividerLine={true}
                 subItems={this.state.data.aboutMe.Blog.items}
                 itemClick={() => this.onItemClickCallBack(ABOUT_ME_BLOG_ITEM_ID, this.state.showBlog)}
-                subItemClick={(subClickItemTitle) => this.onSubItemClickCallBack(subClickItemTitle)}
+                subItemClick={(item) => this.onSubItemClickCallBack(item)}
                 showSubItems={this.state.showBlog}
             />
             <MoreMenuView
@@ -206,7 +205,7 @@ class AboutMePage extends React.Component<Props> {
                 showBottomDividerLine={true}
                 subItems={this.state.data.aboutMe.QQ.items}
                 itemClick={() => this.onItemClickCallBack(ABOUT_ME_QQ_ITEM_ID, this.state.showQQ)}
-                subItemClick={(subClickItemTitle) => this.onSubItemClickCallBack(subClickItemTitle)}
+                subItemClick={(item) => this.onSubItemClickCallBack(item)}
                 showSubItems={this.state.showQQ}
             />
             <MoreMenuView
@@ -216,15 +215,26 @@ class AboutMePage extends React.Component<Props> {
                 showBottomDividerLine={true}
                 subItems={CONTACT_DATA}
                 itemClick={() => this.onItemClickCallBack(ABOUT_ME_CONTACT_ITEM_ID, this.state.showContact)}
-                subItemClick={(subClickItemTitle) => this.onSubItemClickCallBack(subClickItemTitle)}
+                subItemClick={(item) => this.onSubItemClickCallBack(item)}
                 showSubItems={this.state.showContact}
             />
+
         </View>
-        return this.aboutCommon.render(contentView, this.state.data.app);
+        return <View style={styles.outContainer}>
+            {this.aboutCommon.render(contentView, this.state.data.author)}
+            <Toast
+                ref={toast => this.toast = toast}
+                position={'bottom'}
+            />
+        </View>;
     }
 }
 
 const styles = StyleSheet.create({
+
+    outContainer: {
+        flex: 1,
+    },
     container: {
         flex: 1,
         backgroundColor: "#eeeeee",

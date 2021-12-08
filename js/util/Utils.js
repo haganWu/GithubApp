@@ -1,3 +1,5 @@
+import {Linking} from "react-native";
+
 /**
  * @author HaganWu
  * @description Utils
@@ -16,5 +18,18 @@ export default class Utils {
             }
         }
         return false;
+    }
+
+    static sendEmail(url) {
+        Linking.canOpenURL(url)
+            .then(support => {
+                if (!support) {
+                    console.log(`无法处理：${url}`);
+                } else {
+                    Linking.openURL(url);
+                }
+            }).catch(error => {
+            console.error("An error occurred", error);
+        });
     }
 }

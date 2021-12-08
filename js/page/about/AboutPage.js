@@ -5,12 +5,14 @@
  * @data 2021/10/14 14:04
  */
 import React from "react";
-import {Linking, StyleSheet, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import actions from "../../action";
 import {connect} from "react-redux";
 import AboutCommon, {FLAG_ABOUT} from "./AboutCommon";
 import config from "../../res/data/config.json"
 import MoreMenuView from "../../common/MoreMenuView";
+import Utils from "../../util/Utils";
+import NavigationUtil from "../../navigator/NavigationUtil";
 
 const ABOUT_TUTORIAL_ITEM_ID = 0x0012;
 const ABOUT_ABOUT_AUTHOR_ITEM_ID = 0x0013;
@@ -41,20 +43,14 @@ class AboutPage extends React.Component<Props> {
                 break
             case ABOUT_ABOUT_AUTHOR_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 关于 -> 关于作者`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                }, "AboutMePage");
                 break
             case ABOUT_FEEDBACK_ITEM_ID://反馈
                 //发送邮件
                 const url = 'wuhh@csco.com.cn';
-                Linking.canOpenURL(url)
-                    .then(support => {
-                        if (!support) {
-                            console.log(`无法处理：${url}`);
-                        } else {
-                            Linking.openURL(url);
-                        }
-                    }).catch(error => {
-                    console.error("An error occurred", error);
-                });
+                Utils.sendEmail(url);
                 break
         }
     }
