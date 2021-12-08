@@ -76,6 +76,9 @@ class MyPage extends Component {
                 break
             case ABOUT_AUTHOR_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 关于作者`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                }, "AboutMePage");
                 break
             case FEEDBACK_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 反馈`);

@@ -16,6 +16,7 @@ import DataStoreDemo from "../page/demo/DataStoreDemo";
 import TestPage from "../page/TestPage";
 import WebViewPage from "../page/WebViewPage";
 import AboutPage from "../page/about/AboutPage";
+import AboutMePage from "../page/about/AboutMePage";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,8 @@ class AppNavigators extends Component {
                     <Stack.Screen name="WebViewPage" component={WebViewPage}
                                   options={{headerShown: false}}/>
                     <Stack.Screen name="AboutPage" component={AboutPage}
+                                  options={{headerShown: false}}/>
+                    <Stack.Screen name="AboutMePage" component={AboutMePage}
                                   options={{headerShown: false}}/>
 
                     <Stack.Screen name="FetchDemo" component={FetchDemo}
