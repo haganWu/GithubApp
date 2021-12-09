@@ -20,7 +20,7 @@ import {FLAG_STORAGE} from "../expand/dao/DataStore";
 import FavoriteUtil from "../util/FavoriteUtil";
 import EventBus from "react-native-event-bus";
 import EventTypes from "../util/EventTypes";
-import {onFlushPopularFavoriteState} from "../action/popular";
+import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars'
@@ -35,23 +35,32 @@ class PopularPage extends Component<Props> {
 
     constructor(props) {
         super(props);
-        this.tabNames = ["Java", "Android", "Kotlin", "Object-C", "IOS", "Swift"];
+        const {onLoadLanguage} = this.props;
+        onLoadLanguage(FLAG_LANGUAGE.flag_key);
     }
+
 
     _genTabs() {
         const tabs = {};
-        this.tabNames.forEach((item, index) => {
-            tabs[`tab${index}`] = {
-                screen: props => <PopularTabPage {...props} tabLabel={item}/>,
-                navigationOptions: {
-                    title: item,
-                },
+        const {keys} = this.props;
+        console.log(`PopularPage keys:${keys}`);
+        keys.forEach((item, index) => {
+            if (item.checked) {
+                tabs[`tab${index}`] = {
+                    screen: props => <PopularTabPage key={index} {...props} tabLabel={item.name}/>,
+                    navigationOptions: {
+                        title: item.name,
+                    },
+                }
             }
+
         });
         return tabs;
     }
 
     render() {
+        const {keys} = this.props;
+
         let statusBar = {
             backgroundColor: Theme_COLOR,
             barStyle: "light-content",
@@ -62,35 +71,36 @@ class PopularPage extends Component<Props> {
                 statusBar={statusBar}
                 style={{backgroundColor: Theme_COLOR}}
             />
-        let TabNavigator = <NavigationContainer independent={true}>
-            <Tab.Navigator
-                // lazy={true}
-                screenOptions={
-                    {
-                        tabBarItemStyle: styles.tabStyle,
-                        tabBarScrollEnabled: true,
-                        tabBarActiveTintColor: "#DC971D",
-                        // upperCaseLabel: false,
-                        tabBarInactiveTintColor: "white",
-                        tabBarStyle: {
-                            backgroundColor: "#7dc5eb",//TabBar 的背景颜色
-                        },
-                        tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
-                        tabBarLabelStyle: styles.labelStyle,
+        let TabNavigator = keys.length ?
+            <NavigationContainer independent={true}>
+                <Tab.Navigator
+                    // lazy={true}
+                    screenOptions={
+                        {
+                            tabBarItemStyle: styles.tabStyle,
+                            tabBarScrollEnabled: true,
+                            tabBarActiveTintColor: "#DC971D",
+                            // upperCaseLabel: false,
+                            tabBarInactiveTintColor: "white",
+                            tabBarStyle: {
+                                backgroundColor: "#7dc5eb",//TabBar 的背景颜色
+                            },
+                            tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
+                            tabBarLabelStyle: styles.labelStyle,
+                        }
                     }
-                }
-            >
-                {
-                    Object.entries(this._genTabs()).map(item => {
-                        return <Tab.Screen
-                            name={item[0]}
-                            component={item[1].screen}
-                            options={item[1].navigationOptions}
-                        />
-                    })
-                }
-            </Tab.Navigator>
-        </NavigationContainer>
+                >
+                    {
+                        Object.entries(this._genTabs()).map(item => {
+                            return <Tab.Screen
+                                name={item[0]}
+                                component={item[1].screen}
+                                options={item[1].navigationOptions}
+                            />
+                        })
+                    }
+                </Tab.Navigator>
+            </NavigationContainer> : null
 
         return (
             <View style={styles.container}>
@@ -122,9 +132,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#DC971D",
     },
     labelStyle: {
-        fontSize: 18,
+        fontSize: 16,
         margin: 0,
-        textTransform: "lowercase",//设置Tab标题字母小写
+        // textTransform: "lowercase",//设置Tab标题字母小写
+        textTransform: "none"
     },
     popularTabContainer: {
         flex: 1,
@@ -142,7 +153,14 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PopularPage;
+const mapPopularStateToProps = state => ({
+    keys: state.language.keys,
+    // theme: state.theme.theme,
+});
+const mapPopularDispatchToProps = dispatch => ({
+    onLoadLanguage: (flagKey) => dispatch(actions.onLoadLanguage(flagKey)),
+})
+export default connect(mapPopularStateToProps, mapPopularDispatchToProps)(PopularPage);
 
 class PopularTab extends Component<Props> {
     constructor(props) {
@@ -226,7 +244,7 @@ class PopularTab extends Component<Props> {
                 }}
                 onFavorite={(item, isFavorite) => {
                     console.log(`popularPage collect click-> name:${item["full_name"].toString()}, key:${item.id.toString()}`);
-                    FavoriteUtil.onFavorite(FLAG_STORAGE.flag_popular,favoriteDao, item, isFavorite)
+                    FavoriteUtil.onFavorite(FLAG_STORAGE.flag_popular, favoriteDao, item, isFavorite)
                 }}
             />
         );
@@ -303,7 +321,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     onLoadPopularData: (storeName, url, pageSize, favoriteDao) => dispatch(actions.onLoadPopularData(storeName, url, pageSize, favoriteDao)),
     onLoadMorePopular: (storeName, pageIndex, pageSize, items, favoriteDao, callBack) => dispatch(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, favoriteDao, callBack)),
-    onFlushPopularFavoriteState: (storeName, pageIndex, pageSize, items, favoriteDao) => onFlushPopularFavoriteState(actions.onLoadMorePopular(storeName, pageIndex, pageSize, items, favoriteDao)),
+    onFlushPopularFavoriteState: (storeName, pageIndex, pageSize, items, favoriteDao) => dispatch(actions.onFlushPopularFavoriteState(storeName, pageIndex, pageSize, items, favoriteDao)),
 })
 //connect只是一个function，并不一定非要放在export default 后面。
 const PopularTabPage = connect(mapStateToProps, mapDispatchToProps)(PopularTab);
