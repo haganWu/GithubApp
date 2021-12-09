@@ -43,7 +43,6 @@ class PopularPage extends Component<Props> {
     _genTabs() {
         const tabs = {};
         const {keys} = this.props;
-        console.log(`PopularPage keys:${keys}`);
         keys.forEach((item, index) => {
             if (item.checked) {
                 tabs[`tab${index}`] = {
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         margin: 0,
         // textTransform: "lowercase",//设置Tab标题字母小写
-        textTransform: "none"
+        textTransform: "none",
     },
     popularTabContainer: {
         flex: 1,

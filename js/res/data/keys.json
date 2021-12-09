@@ -11,24 +11,24 @@
     "checked": true
   },
   {
-    "path": "react-native",
-    "name": "React Native",
+    "path": "rn",
+    "name": "RN",
     "checked": true
   },
   {
     "path": "MySQL",
     "name": "MySQL",
-    "checked": false
+    "checked": true
   },
   {
     "path": "AngularJS",
     "name": "AngularJS",
-    "checked": false
+    "checked": true
   },
   {
     "path": "jQuery",
     "name": "jQuery",
-    "checked": false
+    "checked": true
   },
   {
     "path": "react",
