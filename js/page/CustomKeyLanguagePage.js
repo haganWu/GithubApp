@@ -31,6 +31,7 @@ class CustomKeyLanguagePage extends React.Component {
         this.languageDao = new LanguageDao(this.params.flag);
         this.state = {
             keys: [],
+            rightButtonTitle: "",
         }
     }
 
@@ -56,8 +57,9 @@ class CustomKeyLanguagePage extends React.Component {
             onLoadLanguage(this.params.flag);
         }
         this.setState({
+            ...this.state,
             keys: CustomKeyLanguagePage._keys(this.props),
-        })
+        });
     }
 
     componentWillUnmount() {
@@ -68,8 +70,13 @@ class CustomKeyLanguagePage extends React.Component {
         const {flag, isRemoveKey} = props.route.params;
         let key = flag === FLAG_LANGUAGE.flag_key ? "keys" : "languages";
         if (isRemoveKey && !original) {
-            //移除标签 并且不需要原始数据
-
+            //移除标签 并且不需要原始数据  如果state中的keys为空则从props中获取
+            return state && state.keys && state.keys.length !== 0 && state.keys || props.language[key].map(val => {
+                return {
+                    ...val,
+                    checked: false,
+                };
+            });
         } else {
             //自定义语言 / 自定义标签
             return props.language[key];
@@ -119,8 +126,15 @@ class CustomKeyLanguagePage extends React.Component {
             NavigationUtil.goBack(this.props.navigation);
             return
         }
+        let keys;
+        if (this.isRemoveKey) {
+            //移除标签
+            for (let i = 0, l = this.changeValues.length; i < l; i++) {
+                ArrayUtil.remove(keys = CustomKeyLanguagePage._keys(this.props, true), this.changeValues[i], "name");
+            }
+        }
         //保存本地数据
-        this.languageDao.save(this.state.keys);
+        this.languageDao.save(keys || this.state.keys);
         //更新store数据 刷新”最热“和”趋势“页面数据
         const {onLoadLanguage} = this.props;
         onLoadLanguage(this.params.flag);
@@ -128,9 +142,6 @@ class CustomKeyLanguagePage extends React.Component {
         NavigationUtil.goBack(this.props.navigation);
     }
 
-    handleWithEdit() {
-        console.log('CustomKeyLanguagePage -> handleWithEdit');
-    }
 
     /**
      * @description 复选框点击
@@ -140,13 +151,16 @@ class CustomKeyLanguagePage extends React.Component {
     onCheckBoxClick(data, index) {
         data.checked = !data.checked;
         ArrayUtil.updateArray(this.changeValues, data);
-        for (let i = 0; i < this.changeValues.length; i++) {
-            console.log(`已发生变化的数据：${JSON.stringify(this.changeValues[i])}`);
-        }
+        console.log(`renderCheckBox -> this.changeValues:${this.changeValues.length}`);
         this.state.keys[index] = data;//更新state刷新视图
         this.setState({
+            ...this.state,
             keys: this.state.keys,
-        })
+        });
+        this.setState({
+            ...this.state,
+            rightButtonTitle: this.changeValues.length > 0 ? (this.isRemoveKey ? "移除" : "保存") : "",
+        });
     }
 
     checkedImage(checked) {
@@ -166,7 +180,6 @@ class CustomKeyLanguagePage extends React.Component {
 
     renderContentView() {
         let dataArray = this.state.keys;
-        console.log(`renderCheckBox -> dataArray:${dataArray.length}`);
         if (!dataArray || dataArray.length === 0) return;
         let len = dataArray.length;
         let views = [];
@@ -186,6 +199,7 @@ class CustomKeyLanguagePage extends React.Component {
 
     render() {
         const {title} = this.params;
+        // let rightButtonTitle = this.isRemoveKey ? '移除' : '保存';
         let navigationBar =
             <NavigationBar
                 title={title}
@@ -193,8 +207,8 @@ class CustomKeyLanguagePage extends React.Component {
                 leftButton={ViewUtil.getLeftBackButton(() => {
                     this.onBackPress()
                 })}
-                rightButton={ViewUtil.getRightTextButton("编辑", () => {
-                    this.handleWithEdit()
+                rightButton={ViewUtil.getRightTextButton(this.state.rightButtonTitle, () => {
+                    this.save()
                 })}
             />
         return (
