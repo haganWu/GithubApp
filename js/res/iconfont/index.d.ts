@@ -5,6 +5,8 @@ import { FunctionComponent } from 'react';
 import { ViewProps } from 'react-native';
 import { GProps } from 'react-native-svg';
 
+export { default as IconYigouxuan } from './IconYigouxuan';
+export { default as IconWeigouxuan } from './IconWeigouxuan';
 export { default as IconQqqun } from './IconQqqun';
 export { default as IconLianxifangshi } from './IconLianxifangshi';
 export { default as IconComputer } from './IconComputer';
@@ -35,7 +37,7 @@ export { default as IconCollectionActive } from './IconCollectionActive';
 export { default as IconGithub } from './IconGithub';
 
 interface Props extends GProps, ViewProps {
-  name: 'qqqun' | 'lianxifangshi' | 'Computer' | 'xiajiantou' | 'shangjiantou' | 'paixu' | 'youjiantou' | 'fenxiang' | 'zuozhe' | 'guanyu' | 'wentifankui' | 'zidingyizhuti' | 'jiaocheng' | 'gouxuan' | 'yichu' | 'share' | 'back' | 'triangle-down' | 'triangle-up' | 'collection-selected' | 'collection' | 'welcome' | 'github1' | 'tendency' | 'hot' | 'mine' | 'collectionActive' | 'github';
+  name: 'yigouxuan' | 'weigouxuan' | 'qqqun' | 'lianxifangshi' | 'Computer' | 'xiajiantou' | 'shangjiantou' | 'paixu' | 'youjiantou' | 'fenxiang' | 'zuozhe' | 'guanyu' | 'wentifankui' | 'zidingyizhuti' | 'jiaocheng' | 'gouxuan' | 'yichu' | 'share' | 'back' | 'triangle-down' | 'triangle-up' | 'collection-selected' | 'collection' | 'welcome' | 'github1' | 'tendency' | 'hot' | 'mine' | 'collectionActive' | 'github';
   size?: number;
   color?: string | string[];
 }

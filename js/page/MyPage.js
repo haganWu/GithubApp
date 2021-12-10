@@ -12,6 +12,7 @@ import NavigationBar from "../common/NavigationBar";
 import actions from "../action";
 import {connect} from "react-redux";
 import MoreMenuView from "../common/MoreMenuView";
+import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 
 const Theme_COLOR = '#7dc5eb';
 
@@ -58,18 +59,36 @@ class MyPage extends Component {
                 break
             case CUSTOM_LANGUAGE_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 自定义语言`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                    title: "自定义语言",
+                    isRemoveKey: false,
+                    flag: FLAG_LANGUAGE.flag_language,
+                }, "CustomKeyLanguagePage");
                 break
             case SORT_LANGUAGE_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 语言排序`);
                 break
             case CUSTOM_KEY_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 自定义标签`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                    title: "自定义标签",
+                    isRemoveKey: false,
+                    flag: FLAG_LANGUAGE.flag_key,
+                }, "CustomKeyLanguagePage");
                 break
             case SORT_KEY_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 标签排序`);
                 break
             case REMOVE_KEY_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 标签移除`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                    title: "标签移除",
+                    isRemoveKey: true,
+                    flag: FLAG_LANGUAGE.flag_key,
+                }, "CustomKeyLanguagePage");
                 break
             case CUSTOM_THEME_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 自定义主题`);

@@ -73,7 +73,7 @@ class PopularPage extends Component<Props> {
         let TabNavigator = keys.length ?
             <NavigationContainer independent={true}>
                 <Tab.Navigator
-                    // lazy={true}
+                    lazy={true}
                     screenOptions={
                         {
                             tabBarItemStyle: styles.tabStyle,

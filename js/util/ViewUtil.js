@@ -5,7 +5,7 @@
  * @data 2021/10/29 15:51
  */
 import React from "react";
-import {TouchableOpacity, StyleSheet} from "react-native";
+import {TouchableOpacity, StyleSheet, Text} from "react-native";
 import IconFont from "../res/iconfont";
 
 export default class ViewUtil {
@@ -15,6 +15,15 @@ export default class ViewUtil {
             onPress={callBack}
         >
             <IconFont name={'back'} color={'white'} size={26}/>
+        </TouchableOpacity>
+    }
+
+    static getRightTextButton(title, callBack) {
+        return <TouchableOpacity
+            style={{paddingVertical: 8}}
+            onPress={callBack}
+        >
+            <Text style={styles.rightTextButton}>{title}</Text>
         </TouchableOpacity>
     }
 
@@ -34,4 +43,8 @@ const styles = StyleSheet.create({
         paddingLeft: 4,
         alignItems: 'center',
     },
+    rightTextButton: {
+        fontSize: 16,
+        color: "white",
+    }
 })
