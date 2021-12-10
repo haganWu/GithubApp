@@ -4,7 +4,7 @@
  * @fileName index.js
  * @data 2021/10/25 14:54
  */
-import {onThemeChange} from './theme'
+import {onThemeChange, onThemeInit, onShowCustomThemeView} from './theme'
 import {onLoadPopularData, onLoadMorePopular, onFlushPopularFavoriteState} from './popular'
 import {onRefreshTrending, onLoadMoreTrending} from './trending'
 import {onLoadFavoriteData} from "./favorite";
@@ -20,4 +20,6 @@ export default {
     onLoadFavoriteData,
     onFlushPopularFavoriteState,
     onLoadLanguage,
+    onThemeInit,
+    onShowCustomThemeView,
 }
