@@ -48,6 +48,7 @@ class TrendingDialog extends React.Component {
                         {
                             TIME_SPANS.map((result, i, arr) => {
                                 return <TouchableOpacity
+                                    key={i}
                                     onPress={() => onSelect(arr[i])}
                                     underlayColor="transparent"
                                 >

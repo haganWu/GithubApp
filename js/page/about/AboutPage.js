@@ -39,11 +39,16 @@ class AboutPage extends React.Component<Props> {
     onItemClickCallBack(itemId) {
         switch (itemId) {
             case ABOUT_TUTORIAL_ITEM_ID:
-                console.log(`onItemClickCallBack -> itemId:${itemId} 关于 -> 教程`);
+                NavigationUtil.goPage({
+                    navigation: this.props.navigation,
+                    title: "教程",
+                    url: "https://coding.imooc.com/class/304.html",
+                }, "WebViewPage");
                 break
             case ABOUT_ABOUT_AUTHOR_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 关于 -> 关于作者`);
                 NavigationUtil.goPage({
+                    theme: this.params.theme,
                     navigation: this.props.navigation,
                 }, "AboutMePage");
                 break
@@ -56,22 +61,27 @@ class AboutPage extends React.Component<Props> {
     }
 
     render() {
+        const {theme} = this.params;
+        console.log(`AboutMePage -- theme:${theme}`)
         const contentView = <View style={styles.container}>
             <MoreMenuView
                 iconName={"jiaocheng"}
                 title={"教程"}
+                iconColor={theme.themeColor}
                 showBottomDividerLine={true}
                 itemClick={() => this.onItemClickCallBack(ABOUT_TUTORIAL_ITEM_ID)}
             />
             <MoreMenuView
                 iconName={"zuozhe"}
                 title={"关于作者"}
+                iconColor={theme.themeColor}
                 showBottomDividerLine={true}
                 itemClick={() => this.onItemClickCallBack(ABOUT_ABOUT_AUTHOR_ITEM_ID)}
             />
             <MoreMenuView
                 iconName={"wentifankui"}
                 title={"反馈"}
+                iconColor={theme.themeColor}
                 showBottomDividerLine={false}
                 itemClick={() => this.onItemClickCallBack(ABOUT_FEEDBACK_ITEM_ID)}
             />

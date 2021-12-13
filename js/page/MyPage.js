@@ -48,6 +48,7 @@ class MyPage extends Component {
         switch (itemId) {
             case CUSTOM_ABOUT_ITEM_ID:
                 NavigationUtil.goPage({
+                    theme: this.props.theme,
                     navigation: this.props.navigation,
                 }, "AboutPage");
                 break
