@@ -21,6 +21,7 @@ import FavoriteUtil from "../util/FavoriteUtil";
 import EventBus from "react-native-event-bus";
 import EventTypes from "../util/EventTypes";
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
+import ViewUtil from "../util/ViewUtil";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars'
@@ -56,6 +57,10 @@ class PopularPage extends Component<Props> {
         return tabs;
     }
 
+    onSearchClick() {
+        console.log("PopularPage -> onSearchClick");
+    }
+
     render() {
         const {keys, theme} = this.props;
 
@@ -67,6 +72,7 @@ class PopularPage extends Component<Props> {
             <NavigationBar
                 title={'最热'}
                 statusBar={statusBar}
+                rightButton={ViewUtil.getRightImageButton("Search", () => this.onSearchClick())}
                 style={theme.styles.navBar}
             />
         let TabNavigator = keys.length ?

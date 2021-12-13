@@ -27,9 +27,18 @@ export default class ViewUtil {
         </TouchableOpacity>
     }
 
+    static getRightImageButton(imageName, callBack) {
+        return (<TouchableOpacity
+            style={styles.buttonStyle}
+            onPress={callBack}
+        >
+            <IconFont name={imageName} color={'white'} size={26}/>
+        </TouchableOpacity>);
+    }
+
     static getShareButton(callBack) {
         return (<TouchableOpacity
-            style={styles.shareButton}
+            style={styles.buttonStyle}
             onPress={callBack}
         >
             <IconFont name={'share'} color={'white'} size={26}/>
@@ -38,9 +47,10 @@ export default class ViewUtil {
 
 }
 const styles = StyleSheet.create({
-    shareButton: {
+    buttonStyle: {
         paddingVertical: 4,
         paddingLeft: 4,
+        paddingRight: 4,
         alignItems: 'center',
     },
     rightTextButton: {
