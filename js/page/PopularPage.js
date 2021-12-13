@@ -72,9 +72,9 @@ class PopularPage extends Component<Props> {
         let TabNavigator = keys.length ?
             <NavigationContainer independent={true}>
                 <Tab.Navigator
-                    lazy={true}
                     screenOptions={
                         {
+                            lazy: true,
                             tabBarItemStyle: styles.tabStyle,
                             tabBarScrollEnabled: true,
                             tabBarActiveTintColor: "white",
@@ -89,8 +89,9 @@ class PopularPage extends Component<Props> {
                     }
                 >
                     {
-                        Object.entries(this._genTabs()).map(item => {
+                        Object.entries(this._genTabs()).map((item, index) => {
                             return <Tab.Screen
+                                key={index}
                                 name={item[0]}
                                 component={item[1].screen}
                                 options={item[1].navigationOptions}

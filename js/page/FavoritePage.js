@@ -40,7 +40,7 @@ class FavoritePage extends Component<Props> {
         const {theme} = this.props;
         this.tabNames.forEach((item, index) => {
             tabs[`tab${index}`] = {
-                screen: props => <FavoriteTabPage {...props} tabLabel={item} theme={theme}/>,
+                screen: props => <FavoriteTabPage  key={index} {...props} tabLabel={item} theme={theme}/>,
                 navigationOptions: {
                     title: item,
                 },
@@ -78,8 +78,9 @@ class FavoritePage extends Component<Props> {
                 }
             >
                 {
-                    Object.entries(this._genTabs()).map(item => {
+                    Object.entries(this._genTabs()).map((item,index) => {
                         return <Tab.Screen
+                            key={index}
                             name={item[0]}
                             component={item[1].screen}
                             options={item[1].navigationOptions}

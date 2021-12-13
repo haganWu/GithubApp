@@ -101,8 +101,9 @@ class DynamicTabNavigator extends React.Component<Props> {
                 }}
             >
                 {
-                    Object.entries(tabs).map(item => {
+                    Object.entries(tabs).map((item, index) => {
                         return <Tab.Screen
+                            key={index}
                             name={item[0]}
                             component={item[1].screen}
                             options={item[1].navigationOptions}/>

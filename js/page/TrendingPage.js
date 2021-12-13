@@ -51,18 +51,17 @@ class TrendingPage extends Component<Props> {
         }
         const {onLoadLanguage} = this.props;
         onLoadLanguage(FLAG_LANGUAGE.flag_language);
-        this.preLanguage = [];
     }
 
 
     _genTabs() {
         const tabs = {};
         const {languages, theme} = this.props;
-        this.preLanguage = languages;
         languages.forEach((item, index) => {
             if (item.checked) {
                 tabs[`tab${index}`] = {
                     screen: props => <TrendingTabPage
+                        key={index}
                         {...props} timeSpan={this.state.timeSpan}
                         tabLabel={item.name}
                         theme={theme}/>,
@@ -109,37 +108,38 @@ class TrendingPage extends Component<Props> {
 
     _tabNav() {
         const {theme} = this.props;
-            this.tabNav =
-                <NavigationContainer
-                    independent={true}>
-                    <Tab.Navigator
-                        lazy={true}
-                        screenOptions={
-                            {
-                                tabBarItemStyle: styles.tabStyle,
-                                tabBarScrollEnabled: true,
-                                tabBarActiveTintColor: "white",
-                                // upperCaseLabel: false,
-                                tabBarInactiveTintColor: "white",
-                                tabBarStyle: {
-                                    backgroundColor: theme.themeColor,//TabBar 的背景颜色
-                                },
-                                tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
-                                tabBarLabelStyle: styles.labelStyle,
-                            }
-                        }
-                    >
+        this.tabNav =
+            <NavigationContainer
+                independent={true}>
+                <Tab.Navigator
+                    screenOptions={
                         {
-                            Object.entries(this._genTabs()).map(item => {
-                                return <Tab.Screen
-                                    name={item[0]}
-                                    component={item[1].screen}
-                                    options={item[1].navigationOptions}
-                                />
-                            })
+                            lazy: true,
+                            tabBarItemStyle: styles.tabStyle,
+                            tabBarScrollEnabled: true,
+                            tabBarActiveTintColor: "white",
+                            // upperCaseLabel: false,
+                            tabBarInactiveTintColor: "white",
+                            tabBarStyle: {
+                                backgroundColor: theme.themeColor,//TabBar 的背景颜色
+                            },
+                            tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
+                            tabBarLabelStyle: styles.labelStyle,
                         }
-                    </Tab.Navigator>
-                </NavigationContainer>
+                    }
+                >
+                    {
+                        Object.entries(this._genTabs()).map((item, index) => {
+                            return <Tab.Screen
+                                key={index}
+                                name={item[0]}
+                                component={item[1].screen}
+                                options={item[1].navigationOptions}
+                            />
+                        })
+                    }
+                </Tab.Navigator>
+            </NavigationContainer>
         return this.tabNav;
     }
 
