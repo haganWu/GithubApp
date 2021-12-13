@@ -14,7 +14,6 @@ import {connect} from "react-redux";
 import MoreMenuView from "../common/MoreMenuView";
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 
-const Theme_COLOR = '#7dc5eb';
 
 const CUSTOM_ABOUT_ITEM_ID = 0x0001;
 const TUTORIAL_ITEM_ID = 0x0002;
@@ -28,18 +27,20 @@ const ABOUT_AUTHOR_ITEM_ID = 0x0009;
 const FEEDBACK_ITEM_ID = 0x0010;
 const SHARE_ITEM_ID = 0x0011;
 
+const SHOW_TEST_BUTTON = false;
+
 class MyPage extends Component {
 
     getRightButton() {
         return (
-            <View>
+            SHOW_TEST_BUTTON ? <View>
                 <Text style={styles.navigationBarButton} onPress={() => {
                     console.log("RightButton click");
                     NavigationUtil.goPage({
                         navigation: this.props.navigation,
                     }, "TestPage");
                 }}>测试</Text>
-            </View>
+            </View> : null
         )
     }
 
@@ -92,6 +93,8 @@ class MyPage extends Component {
                 break
             case CUSTOM_THEME_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 自定义主题`);
+                const {onShowCustomThemeView} = this.props;
+                onShowCustomThemeView(true);
                 break
             case ABOUT_AUTHOR_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 关于作者`);
@@ -109,15 +112,16 @@ class MyPage extends Component {
     }
 
     render() {
+        const {theme} = this.props;
         let statusBar = {
-            backgroundColor: Theme_COLOR,
+            backgroundColor: theme.themeColor,
             barStyle: "light-content",
         }
         let navigationBar =
             <NavigationBar
                 title={'我的'}
                 statusBar={statusBar}
-                style={{backgroundColor: Theme_COLOR}}
+                style={theme.styles.navBar}
                 rightButton={this.getRightButton()}
             />
 
@@ -129,18 +133,21 @@ class MyPage extends Component {
                         bigIcon={true}
                         iconName={"github1"}
                         title={"GitHub"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={true}
                         itemClick={() => this.onItemClickCallBack(CUSTOM_ABOUT_ITEM_ID)}
                     />
                     <MoreMenuView
                         iconName={"jiaocheng"}
                         title={"教程"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={false}
                         itemClick={() => this.onItemClickCallBack(TUTORIAL_ITEM_ID)}
                     />
                     <MoreMenuView
                         iconName={"gouxuan"}
                         title={"自定义语言"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={true}
                         topGroupMark={"趋势管理"}
                         itemClick={() => this.onItemClickCallBack(CUSTOM_LANGUAGE_ID)}
@@ -148,12 +155,14 @@ class MyPage extends Component {
                     <MoreMenuView
                         iconName={"paixu"}
                         title={"语言排序"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={false}
                         itemClick={() => this.onItemClickCallBack(SORT_LANGUAGE_ID)}
                     />
                     <MoreMenuView
                         iconName={"gouxuan"}
                         title={"自定义标签"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={true}
                         topGroupMark={"最热管理"}
                         itemClick={() => this.onItemClickCallBack(CUSTOM_KEY_ID)}
@@ -161,12 +170,14 @@ class MyPage extends Component {
                     <MoreMenuView
                         iconName={"paixu"}
                         title={"标签排序"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={true}
                         itemClick={() => this.onItemClickCallBack(SORT_KEY_ID)}
                     />
                     <MoreMenuView
                         iconName={"yichu"}
                         title={"标签移除"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={false}
                         itemClick={() => this.onItemClickCallBack(REMOVE_KEY_ID)}
                     />
@@ -174,6 +185,7 @@ class MyPage extends Component {
                     <MoreMenuView
                         iconName={"zidingyizhuti"}
                         title={"自定义主题"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={true}
                         topGroupMark={"设置"}
                         itemClick={() => this.onItemClickCallBack(CUSTOM_THEME_ITEM_ID)}
@@ -181,12 +193,14 @@ class MyPage extends Component {
                     <MoreMenuView
                         iconName={"zuozhe"}
                         title={"关于作者"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={true}
                         itemClick={() => this.onItemClickCallBack(ABOUT_AUTHOR_ITEM_ID)}
                     />
                     <MoreMenuView
                         iconName={"wentifankui"}
                         title={"反馈"}
+                        iconColor={theme.themeColor}
                         showBottomDividerLine={false}
                         itemClick={() => this.onItemClickCallBack(FEEDBACK_ITEM_ID)}
                     />
@@ -206,7 +220,11 @@ const styles = StyleSheet.create({
         color: "#ffffff",
     },
 });
+const mapStateToProps = state => ({
+    theme: state.theme.theme,
+});
+
 const mapDispatchToProps = dispatch => ({
-    onThemeChange: theme => dispatch(actions.onThemeChange(theme)),
+    onShowCustomThemeView: (show) => dispatch(actions.onShowCustomThemeView(show)),
 })
-export default connect(null, mapDispatchToProps)(MyPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MyPage);

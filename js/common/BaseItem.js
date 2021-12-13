@@ -37,6 +37,7 @@ export default class BaseItem extends React.Component {
 
 
     _favoriteIcon() {
+        const {theme} = this.props;
         return <TouchableOpacity
             style={{padding: 6}}
             onPress={() => this.onPressFavorite()}
@@ -44,7 +45,7 @@ export default class BaseItem extends React.Component {
         >
             <IconFont
                 name={'collection'}
-                color={this.state.isFavorite ? '#1296db' : '#333333'}
+                color={this.state.isFavorite ? theme.themeColor : '#333333'}
                 size={26}
             />
         </TouchableOpacity>

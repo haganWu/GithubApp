@@ -1,6 +1,6 @@
 /**
  * @author HaganWu
- * @description
+ * @description  reducer 根据action修改state将其转变成下一个state （previousState, action) => newState
  * @fileName index.js
  * @data 2021/10/27  10:38
  */

@@ -8,7 +8,7 @@ import Types from "../types"
 import ThemeDao from "../../expand/dao/ThemeDao";
 
 /**
- * @description 主题变更
+ * @description 主题变更 action创建函数
  * @author HaganWu
  * @data 2021/12/10  14:25
  */
@@ -28,7 +28,7 @@ export function onThemeInit() {
     return dispatch => {
         new ThemeDao().getTheme()
             .then((theme) => {
-                dispatch(onThemeChange(theme));
+                dispatch(onThemeChange(theme));//通过dispatch()方法把action传给Store
             })
     }
 }
@@ -39,6 +39,8 @@ export function onThemeInit() {
  * @data 2021/12/10  14:29
  */
 export function onShowCustomThemeView(show) {
+    // action创建函数
+    console.log(" 查看调用 onShowCustomThemeView 次数");
     return {
         type: Types.SHOW_THEME_VIEW,
         customThemeViewVisible: show,

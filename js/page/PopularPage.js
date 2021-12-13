@@ -24,7 +24,6 @@ import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
 
 const URL = 'https://api.github.com/search/repositories?q=';
 const QUERY_STR = '&sort=stars'
-const Theme_COLOR = '#7dc5eb';
 const PAGE_SIZE = 10;
 const favoriteDao = new FavoriteDao(FLAG_STORAGE.flag_popular);
 
@@ -42,11 +41,11 @@ class PopularPage extends Component<Props> {
 
     _genTabs() {
         const tabs = {};
-        const {keys} = this.props;
+        const {keys, theme} = this.props;
         keys.forEach((item, index) => {
             if (item.checked) {
                 tabs[`tab${index}`] = {
-                    screen: props => <PopularTabPage key={index} {...props} tabLabel={item.name}/>,
+                    screen: props => <PopularTabPage key={index} {...props} tabLabel={item.name} theme={theme}/>,
                     navigationOptions: {
                         title: item.name,
                     },
@@ -58,17 +57,17 @@ class PopularPage extends Component<Props> {
     }
 
     render() {
-        const {keys} = this.props;
+        const {keys, theme} = this.props;
 
         let statusBar = {
-            backgroundColor: Theme_COLOR,
+            backgroundColor: theme.themeColor,
             barStyle: "light-content",
         }
         let navigationBar =
             <NavigationBar
                 title={'最热'}
                 statusBar={statusBar}
-                style={{backgroundColor: Theme_COLOR}}
+                style={theme.styles.navBar}
             />
         let TabNavigator = keys.length ?
             <NavigationContainer independent={true}>
@@ -78,11 +77,11 @@ class PopularPage extends Component<Props> {
                         {
                             tabBarItemStyle: styles.tabStyle,
                             tabBarScrollEnabled: true,
-                            tabBarActiveTintColor: "#DC971D",
+                            tabBarActiveTintColor: "white",
                             // upperCaseLabel: false,
                             tabBarInactiveTintColor: "white",
                             tabBarStyle: {
-                                backgroundColor: "#7dc5eb",//TabBar 的背景颜色
+                                backgroundColor: theme.themeColor,//TabBar 的背景颜色
                             },
                             tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
                             tabBarLabelStyle: styles.labelStyle,
@@ -114,10 +113,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    text: {
-        fontSize: 22,
-        color: "#7fb550",
-    },
     tabStyle: {
         // minWidth: 50 //fix minWidth会导致tabStyle初次加载时闪烁
         width: 80,
@@ -128,7 +123,7 @@ const styles = StyleSheet.create({
         width: 20,
         marginLeft: 30,
         borderRadius: 2,
-        backgroundColor: "#DC971D",
+        backgroundColor: "white",
     },
     labelStyle: {
         fontSize: 16,
@@ -154,7 +149,7 @@ const styles = StyleSheet.create({
 
 const mapPopularStateToProps = state => ({
     keys: state.language.keys,
-    // theme: state.theme.theme,
+    theme: state.theme.theme,
 });
 const mapPopularDispatchToProps = dispatch => ({
     onLoadLanguage: (flagKey) => dispatch(actions.onLoadLanguage(flagKey)),
@@ -229,10 +224,12 @@ class PopularTab extends Component<Props> {
 
 
     renderItem(data) {
+        const {theme} = this.props;
         const item = data.item;
         return (
             <PopularItem
                 projectModel={item}
+                theme={theme}
                 onSelect={(callback) => {
                     //导航传值
                     NavigationUtil.goPage({
@@ -264,6 +261,7 @@ class PopularTab extends Component<Props> {
 
     render() {
         let store = this._store();
+        const {theme} = this.props;
         return (
             <View style={styles.popularTabContainer}>
                 <FlatList
@@ -273,10 +271,10 @@ class PopularTab extends Component<Props> {
                     refreshControl={
                         <RefreshControl
                             title={'loading'}
-                            titleColor={Theme_COLOR}
-                            colors={[Theme_COLOR]}
+                            titleColor={theme.themeColor}
+                            colors={[theme.themeColor]}
                             onRefresh={() => this.loadData(false)}
-                            tintColor={Theme_COLOR}
+                            tintColor={theme.themeColor}
                             refreshing={store.isLoading}/>
                     }
                     ListFooterComponent={() => this.genIndicator()}

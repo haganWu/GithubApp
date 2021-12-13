@@ -93,7 +93,7 @@ class DynamicTabNavigator extends React.Component<Props> {
         return <NavigationContainer independent={true}>
             <Tab.Navigator
                 screenOptions={{
-                    tabBarActiveTintColor: this.props.theme,
+                    tabBarActiveTintColor: this.props.theme.themeColor,
                 }}
                 tabBar={props => {
                     this.fireEvent(props.state);

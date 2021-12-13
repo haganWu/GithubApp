@@ -23,7 +23,6 @@ import EventBus from "react-native-event-bus";
 import EventTypes from "../util/EventTypes";
 
 
-const Theme_COLOR = '#7dc5eb';
 type Props = {}
 const Tab = createMaterialTopTabNavigator();
 
@@ -38,9 +37,10 @@ class FavoritePage extends Component<Props> {
 
     _genTabs() {
         const tabs = {};
+        const {theme} = this.props;
         this.tabNames.forEach((item, index) => {
             tabs[`tab${index}`] = {
-                screen: props => <FavoriteTabPage {...props} tabLabel={item}/>,
+                screen: props => <FavoriteTabPage {...props} tabLabel={item} theme={theme}/>,
                 navigationOptions: {
                     title: item,
                 },
@@ -50,15 +50,16 @@ class FavoritePage extends Component<Props> {
     }
 
     render() {
+        const {theme} = this.props;
         let statusBar = {
-            backgroundColor: Theme_COLOR,
+            backgroundColor: theme.themeColor,
             barStyle: "light-content",
         }
         let navigationBar =
             <NavigationBar
                 title={'收藏'}
                 statusBar={statusBar}
-                style={{backgroundColor: Theme_COLOR}}
+                style={theme.styles.navBar}
             />
         let TabNavigator = <NavigationContainer independent={true}>
             <Tab.Navigator
@@ -66,10 +67,10 @@ class FavoritePage extends Component<Props> {
                     {
                         tabBarItemStyle: styles.tabStyle,
                         tabBarScrollEnabled: false,
-                        tabBarActiveTintColor: "#DC971D",
+                        tabBarActiveTintColor: "white",
                         tabBarInactiveTintColor: "white",
                         tabBarStyle: {
-                            backgroundColor: "#7dc5eb",//TabBar 的背景颜色
+                            backgroundColor: theme.themeColor,//TabBar 的背景颜色
                         },
                         tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
                         tabBarLabelStyle: styles.labelStyle,
@@ -97,6 +98,12 @@ class FavoritePage extends Component<Props> {
     }
 }
 
+const mapFavoriteStateToProps = state => ({
+    theme: state.theme.theme,
+});
+export default connect(mapFavoriteStateToProps, null)(FavoritePage);
+
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -110,7 +117,7 @@ const styles = StyleSheet.create({
         width: 20,
         marginLeft: (screenWidth / 2 - 20) / 2,
         borderRadius: 2,
-        backgroundColor: "#DC971D",
+        backgroundColor: "white",
     },
     labelStyle: {
         fontSize: 18,
@@ -132,7 +139,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
 });
-export default FavoritePage;
+
 
 class FavoriteTab extends Component<Props> {
 
@@ -182,10 +189,12 @@ class FavoriteTab extends Component<Props> {
 
     renderItem(data) {
         const item = data.item;
+        const {theme} = this.props;
         return (
             <FavoriteItem
                 flag={this.storeName}
                 projectModel={item}
+                theme={theme}
                 onSelect={(callback) => {
                     //导航传值
                     NavigationUtil.goPage({
@@ -213,6 +222,7 @@ class FavoriteTab extends Component<Props> {
 
     render() {
         let store = this._store();
+        const {theme} = this.props;
         return (
             <View style={styles.popularTabContainer}>
                 <FlatList
@@ -222,10 +232,10 @@ class FavoriteTab extends Component<Props> {
                     refreshControl={
                         <RefreshControl
                             title={'loading'}
-                            titleColor={Theme_COLOR}
-                            colors={[Theme_COLOR]}
+                            titleColor={theme.themeColor}
+                            colors={[theme.themeColor]}
                             onRefresh={() => this.loadData(true)}
-                            tintColor={Theme_COLOR}
+                            tintColor={theme.themeColor}
                             refreshing={store.isLoading}/>
                     }
                 />
