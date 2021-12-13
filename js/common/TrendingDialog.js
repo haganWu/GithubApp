@@ -51,7 +51,7 @@ class TrendingDialog extends React.Component {
                                     onPress={() => onSelect(arr[i])}
                                     underlayColor="transparent"
                                 >
-                                    <View>
+                                    <View key={i}>
                                         <Text style={styles.showTextStyle}>{arr[i].showText}</Text>
                                         {i !== TIME_SPANS.length - 1 ? <View style={styles.line}/> : null}
                                     </View>

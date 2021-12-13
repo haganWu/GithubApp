@@ -176,11 +176,13 @@ class AboutMePage extends React.Component<Props> {
     }
 
     render() {
-
+        const {theme} = this.params;
+        console.log(`AboutMePage -- theme:${theme}`)
         const contentView = <View style={styles.container}>
             <MoreMenuView
                 iconName={"jiaocheng"}
                 title={"教程"}
+                iconColor={theme.themeColor}
                 haveSubItems={true}
                 showBottomDividerLine={true}
                 subItems={this.state.data.aboutMe.Tutorial.items}
@@ -191,6 +193,7 @@ class AboutMePage extends React.Component<Props> {
             <MoreMenuView
                 iconName={"Computer"}
                 title={"技术博客"}
+                iconColor={theme.themeColor}
                 haveSubItems={true}
                 showBottomDividerLine={true}
                 subItems={this.state.data.aboutMe.Blog.items}
@@ -201,6 +204,7 @@ class AboutMePage extends React.Component<Props> {
             <MoreMenuView
                 iconName={"qqqun"}
                 title={"技术交流群"}
+                iconColor={theme.themeColor}
                 haveSubItems={true}
                 showBottomDividerLine={true}
                 subItems={this.state.data.aboutMe.QQ.items}
@@ -211,6 +215,7 @@ class AboutMePage extends React.Component<Props> {
             <MoreMenuView
                 iconName={"lianxifangshi"}
                 title={"联系方式"}
+                iconColor={theme.themeColor}
                 haveSubItems={true}
                 showBottomDividerLine={true}
                 subItems={CONTACT_DATA}

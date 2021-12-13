@@ -18,7 +18,6 @@ import CheckBox from "react-native-check-box";
 import ArrayUtil from "../util/ArrayUtil";
 import SafeAreaViewPlus from "../common/SafeAreaViewPlus";
 
-const Theme_COLOR = '#7dc5eb';
 
 class CustomKeyLanguagePage extends React.Component {
 
@@ -164,7 +163,8 @@ class CustomKeyLanguagePage extends React.Component {
     }
 
     checkedImage(checked) {
-        return <IconFont name={checked ? "yigouxuan" : "weigouxuan"} size={16} color={Theme_COLOR}/>
+        const {theme} = this.props;
+        return <IconFont name={checked ? "yigouxuan" : "weigouxuan"} size={16} color={theme.themeColor}/>
     }
 
     renderCheckBox(data, index) {
@@ -199,11 +199,11 @@ class CustomKeyLanguagePage extends React.Component {
 
     render() {
         const {title} = this.params;
-        // let rightButtonTitle = this.isRemoveKey ? '移除' : '保存';
+        const {theme} = this.props;
         let navigationBar =
             <NavigationBar
                 title={title}
-                style={{backgroundColor: Theme_COLOR}}
+                style={theme.styles.navBar}
                 leftButton={ViewUtil.getLeftBackButton(() => {
                     this.onBackPress()
                 })}
@@ -212,7 +212,7 @@ class CustomKeyLanguagePage extends React.Component {
                 })}
             />
         return (
-            <SafeAreaViewPlus topColor={Theme_COLOR} style={styles.container}>
+            <SafeAreaViewPlus topColor={theme.themeColor} style={styles.container}>
                 {navigationBar}
                 <ScrollView>
                     {this.renderContentView()}
@@ -258,17 +258,11 @@ const
             paddingVertical: 10,
         },
     });
-const
-    mapStateToProps = state => ({
-        language: state.language,
-    })
-const
-    mapDispatchToProps = dispatch => ({
-        onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag)),
-    })
-export default connect(mapStateToProps, mapDispatchToProps)
-
-(
-    CustomKeyLanguagePage
-)
-;
+const mapStateToProps = state => ({
+    language: state.language,
+    theme: state.theme.theme,
+})
+const mapDispatchToProps = dispatch => ({
+    onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(CustomKeyLanguagePage);

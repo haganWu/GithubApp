@@ -14,8 +14,8 @@ import WebView from "react-native-webview";
 import BackPressComponent from "../../common/BackPressComponent";
 import FavoriteDao from "../../expand/dao/FavoriteDao";
 import {FLAG_STORAGE} from "../../expand/dao/DataStore";
+import {connect} from "react-redux";
 
-const Theme_COLOR = '#7dc5eb';
 type Props = {};
 const TRENDING_URL = "https://github.com/";
 
@@ -116,10 +116,11 @@ class DetailPage extends React.Component<Props> {
 
     render() {
         const titleLayoutStyle = this.state.title.length > 20 ? {paddingRequired: 30} : null;
+        const {theme} = this.props;
         let navigationBar =
             <NavigationBar
                 title={this.state.title}
-                style={{backgroundColor: Theme_COLOR}}
+                style={theme.styles.navBar}
                 leftButton={ViewUtil.getLeftBackButton(() => {
                     this.onBackPress()
                 })}
@@ -164,4 +165,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-export default DetailPage;
+
+const mapStateToProps = state => ({
+    theme: state.theme.theme,
+})
+export default connect(mapStateToProps, null)(DetailPage);

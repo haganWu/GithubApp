@@ -12,7 +12,6 @@ import React from "react";
  * @fileName AboutCommon.js
  * @data 2021/12/6 15:12
  */
-const Theme_COLOR = '#7dc5eb';
 export const FLAG_ABOUT = {flag_about: 'about', flag_about_me: 'about_me'}
 
 class AboutCommon {
@@ -112,9 +111,10 @@ class AboutCommon {
 
     render(contentView, params) {
         const renderConfig = this.getParallaxRenderConfig(params);
+        const theme = this.props.theme;
         return (
             <ParallaxScrollView
-                backgroundColor={Theme_COLOR}
+                backgroundColor={theme.themeColor}
                 contentBackgroundColor={GlobalStyles.backgroundColor}
                 parallaxHeaderHeight={PARALLAX_HEADER_HEIGHT}
                 stickyHeaderHeight={STICKY_HEADER_HEIGHT}

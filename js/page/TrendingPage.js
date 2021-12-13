@@ -32,6 +32,7 @@ import FavoriteDao from "../expand/dao/FavoriteDao";
 import EventBus from "react-native-event-bus";
 import EventTypes from "../util/EventTypes";
 import {FLAG_LANGUAGE} from "../expand/dao/LanguageDao";
+import ArrayUtil from "../util/ArrayUtil";
 
 const URL = 'https://github.com/trending/';
 const QUERY_STR = '?since='
@@ -51,12 +52,14 @@ class TrendingPage extends Component<Props> {
         }
         const {onLoadLanguage} = this.props;
         onLoadLanguage(FLAG_LANGUAGE.flag_language);
+        this.preLanguage = [];
     }
 
 
     _genTabs() {
         const tabs = {};
         const {languages, theme} = this.props;
+        this.preLanguage = languages;
         languages.forEach((item, index) => {
             if (item.checked) {
                 tabs[`tab${index}`] = {
@@ -107,39 +110,42 @@ class TrendingPage extends Component<Props> {
     }
 
     _tabNav() {
-        const {theme} = this.props;
-        this.tabNav =
-            <NavigationContainer
-                independent={true}>
-                <Tab.Navigator
-                    screenOptions={
-                        {
-                            lazy: true,
-                            tabBarItemStyle: styles.tabStyle,
-                            tabBarScrollEnabled: true,
-                            tabBarActiveTintColor: "white",
-                            // upperCaseLabel: false,
-                            tabBarInactiveTintColor: "white",
-                            tabBarStyle: {
-                                backgroundColor: theme.themeColor,//TabBar 的背景颜色
-                            },
-                            tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
-                            tabBarLabelStyle: styles.labelStyle,
+        const {languages, theme} = this.props;
+        if (theme !== this.theme || !this.tabNav || !ArrayUtil.isEqual(this.preLanguage, languages)) {
+            this.theme = theme;
+            this.tabNav =
+                <NavigationContainer
+                    independent={true}>
+                    <Tab.Navigator
+                        screenOptions={
+                            {
+                                lazy: true,
+                                tabBarItemStyle: styles.tabStyle,
+                                tabBarScrollEnabled: true,
+                                tabBarActiveTintColor: "white",
+                                // upperCaseLabel: false,
+                                tabBarInactiveTintColor: "white",
+                                tabBarStyle: {
+                                    backgroundColor: theme.themeColor,//TabBar 的背景颜色
+                                },
+                                tabBarIndicatorStyle: styles.indicatorStyle,//标签指示器的样式
+                                tabBarLabelStyle: styles.labelStyle,
+                            }
                         }
-                    }
-                >
-                    {
-                        Object.entries(this._genTabs()).map((item, index) => {
-                            return <Tab.Screen
-                                key={index}
-                                name={item[0]}
-                                component={item[1].screen}
-                                options={item[1].navigationOptions}
-                            />
-                        })
-                    }
-                </Tab.Navigator>
-            </NavigationContainer>
+                    >
+                        {
+                            Object.entries(this._genTabs()).map((item, index) => {
+                                return <Tab.Screen
+                                    key={index}
+                                    name={item[0]}
+                                    component={item[1].screen}
+                                    options={item[1].navigationOptions}
+                                />
+                            })
+                        }
+                    </Tab.Navigator>
+                </NavigationContainer>
+        }
         return this.tabNav;
     }
 

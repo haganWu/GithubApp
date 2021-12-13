@@ -99,6 +99,7 @@ class MyPage extends Component {
             case ABOUT_AUTHOR_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 关于作者`);
                 NavigationUtil.goPage({
+                    theme: this.props.theme,
                     navigation: this.props.navigation,
                 }, "AboutMePage");
                 break
