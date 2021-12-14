@@ -9,6 +9,7 @@ import {onLoadPopularData, onLoadMorePopular, onFlushPopularFavoriteState} from 
 import {onRefreshTrending, onLoadMoreTrending} from './trending'
 import {onLoadFavoriteData} from "./favorite";
 import {onLoadLanguage} from "./language";
+import {onSearch, onSearchCancel, onLoadMoreSearch} from "./search";
 
 
 export default {
@@ -22,4 +23,7 @@ export default {
     onLoadLanguage,
     onThemeInit,
     onShowCustomThemeView,
+    onSearch,
+    onSearchCancel,
+    onLoadMoreSearch
 }

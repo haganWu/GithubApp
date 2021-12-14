@@ -1,6 +1,6 @@
 /**
  * @author HaganWu
- * @description ActionUtil
+ * @description 处理数据
  * @fileName ActionUtil.js
  * @data 2021/10/28 16:30
  */
@@ -8,7 +8,7 @@ import ProjectModel from "../model/ProjectModel";
 import Utils from "../util/Utils";
 
 
-export default function dealWithData(actionType, dispatch, storeName, data, pageSize, favoriteDao) {
+export default function dealWithData(actionType, dispatch, storeName, data, pageSize, favoriteDao, params) {
     let fixItems = [];
     if (data && data.data) {
         if (Array.isArray(data.data)) {
@@ -29,6 +29,7 @@ export default function dealWithData(actionType, dispatch, storeName, data, page
             projectModes: projectModels,
             storeName: storeName,
             pageIndex: 1,
+            ...params,
         })
     });
 
@@ -58,8 +59,11 @@ export async function _projectModels(showItems, favoriteDao, callback) {
     for (let i = 0, len = showItems.length; i < len; i++) {
         projectModels.push(new ProjectModel(showItems[i], Utils.checkIsFavorite(showItems[i], keys)))
     }
+    doCallback(callback, projectModels);
+}
 
-    if (typeof callback === "function") {
-        callback(projectModels);
+export const doCallback = (callback, object) => {
+    if (typeof callback === 'function') {
+        callback(object);
     }
 }
