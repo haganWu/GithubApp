@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
     },
     navBarTitleContainer: {
-        alignItems: 'center',
         justifyContent: 'center',
         position: 'absolute',
         left: 40,
@@ -100,6 +99,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: 'white',
+        alignSelf:"center"
     },
     statusBar: {
         height: STATUS_BAR_HEIGHT,
