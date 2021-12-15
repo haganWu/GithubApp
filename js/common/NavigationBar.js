@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         color: 'white',
-        alignSelf:"center"
+        alignSelf: "center"
     },
     statusBar: {
         height: STATUS_BAR_HEIGHT,

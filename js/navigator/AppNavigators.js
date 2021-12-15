@@ -18,6 +18,7 @@ import WebViewPage from "../page/WebViewPage";
 import AboutPage from "../page/about/AboutPage";
 import AboutMePage from "../page/about/AboutMePage";
 import CustomKeyLanguagePage from "../page/CustomKeyLanguagePage";
+import SearchPage from "../page/SearchPage";
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,8 @@ class AppNavigators extends Component {
                     <Stack.Screen name="AboutMePage" component={AboutMePage}
                                   options={{headerShown: false}}/>
                     <Stack.Screen name="CustomKeyLanguagePage" component={CustomKeyLanguagePage}
+                                  options={{headerShown: false}}/>
+                    <Stack.Screen name="SearchPage" component={SearchPage}
                                   options={{headerShown: false}}/>
 
                     <Stack.Screen name="FetchDemo" component={FetchDemo}

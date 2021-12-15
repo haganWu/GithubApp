@@ -215,7 +215,7 @@ class FavoriteTab extends Component<Props> {
         if (!store) {
             store = {
                 isLoading: false,
-                projectModes: [],//要显式的数据
+                projectModels: [],//要显式的数据
             }
         }
         return store;
@@ -227,7 +227,7 @@ class FavoriteTab extends Component<Props> {
         return (
             <View style={styles.popularTabContainer}>
                 <FlatList
-                    data={store.projectModes}
+                    data={store.projectModels}
                     renderItem={data => this.renderItem(data)}
                     keyExtractor={item => "" + item.item.id + (this.storeName === FLAG_STORAGE.flag_popular ? item.item["full_name"] : item.item["fullName"])}
                     refreshControl={

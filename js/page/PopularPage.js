@@ -58,7 +58,10 @@ class PopularPage extends Component<Props> {
     }
 
     onSearchClick() {
-        console.log("PopularPage -> onSearchClick");
+        NavigationUtil.goPage({
+            navigation: this.props.navigation,
+            title: "搜索",
+        }, "SearchPage")
     }
 
     render() {
@@ -218,7 +221,7 @@ class PopularTab extends Component<Props> {
             store = {
                 items: [],
                 isLoading: false,
-                projectModes: [],//要显式的数据
+                projectModels: [],//要显式的数据
                 hideLoadingMore: true,//默认隐藏加载更多
             }
         }
@@ -272,7 +275,7 @@ class PopularTab extends Component<Props> {
         return (
             <View style={styles.popularTabContainer}>
                 <FlatList
-                    data={store.projectModes}
+                    data={store.projectModels}
                     renderItem={data => this.renderItem(data)}
                     keyExtractor={item => "" + item.item.id + item.item["full_name"]}
                     refreshControl={

@@ -26,7 +26,7 @@ export default function dealWithData(actionType, dispatch, storeName, data, page
         dispatch({
             type: actionType,
             items: fixItems,
-            projectModes: projectModels,
+            projectModels: projectModels,
             storeName: storeName,
             pageIndex: 1,
             ...params,

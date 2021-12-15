@@ -57,12 +57,12 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
                 })
             } else {
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
-                _projectModels(dataArray.slice(0, max), favoriteDao, projectModes => {
+                _projectModels(dataArray.slice(0, max), favoriteDao, projectModels => {
                     dispatch({
                         type: Types.POPULAR_LOAD_MORE_SUCCESS,
                         storeName: storeName,
                         pageIndex: pageIndex,
-                        projectModes: projectModes,
+                        projectModels: projectModels,
                     })
                 })
 
@@ -83,12 +83,12 @@ export function onLoadMorePopular(storeName, pageIndex, pageSize, dataArray = []
 export function onFlushPopularFavoriteState(storeName, pageIndex, pageSize, dataArray = [], favoriteDao) {
     return dispatch => {
         let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
-        _projectModels(dataArray.slice(0, max), favoriteDao, projectModes => {
+        _projectModels(dataArray.slice(0, max), favoriteDao, projectModels => {
             dispatch({
                 type: Types.PLUSH_POPULAR_FAVORITE_STATE,
                 storeName: storeName,
                 pageIndex: pageIndex,
-                projectModes: projectModes,
+                projectModels: projectModels,
             })
         })
     }

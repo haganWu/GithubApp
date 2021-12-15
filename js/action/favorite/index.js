@@ -30,7 +30,7 @@ export function onLoadFavoriteData(flag, isShowLoading) {
                 dispatch(
                     {
                         type: Types.FAVORITE_LOAD_SUCCESS,
-                        projectModes: resultDataList,
+                        projectModels: resultDataList,
                         storeName: flag,
                     }
                 );

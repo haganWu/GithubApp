@@ -40,7 +40,7 @@ export default function onAction(state = defaultState, action) {
                 ...state,
                 [action.storeName]: {
                     ...state[action.storeName],
-                    projectModes: action.projectModes,//此次要展示的数据
+                    projectModels: action.projectModels,//此次要展示的数据
                     isLoading: false,
                 },
             };

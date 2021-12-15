@@ -51,12 +51,12 @@ export function onLoadMoreTrending(storeName, pageIndex, pageSize, dataArray = [
                 })
             } else {
                 let max = pageSize * pageIndex > dataArray.length ? dataArray.length : pageSize * pageIndex;
-                _projectModels(dataArray.slice(0, max), favoriteDao, favoriteDao, FLAG_STORAGE.flag_trending, projectModes => {
+                _projectModels(dataArray.slice(0, max), favoriteDao, favoriteDao, FLAG_STORAGE.flag_trending, projectModels => {
                     dispatch({
                         type: Types.TRENDING_LOAD_MORE_SUCCESS,
                         storeName: storeName,
                         pageIndex: pageIndex,
-                        projectModes: projectModes,
+                        projectModels: projectModels,
                     })
                 })
             }

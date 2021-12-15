@@ -10,9 +10,10 @@ const defaultState = {
     showText: "搜索",//右侧按钮 搜索/取消
     items: [],//原始数据
     isLoading: false,
-    projectModes: [],//要显式的数据
+    projectModels: [],//要显式的数据
     hideLoadingMore: true,//默认隐藏加载更多
     showBottomAddButton: false,//显式添加按钮
+    inputKey: ""
 }
 export default function onAction(state = defaultState, action) {
     switch (action.type) {
@@ -31,7 +32,7 @@ export default function onAction(state = defaultState, action) {
                 hideLoadingMore: true,
                 showBottomAddButton: action.showBottomAddButton,
                 items: action.items,
-                projectModes: action.projectModes,
+                projectModels: action.projectModels,
                 pageIndex: action.pageIndex,
                 showText: "搜索",
                 inputKey: action.inputKey,

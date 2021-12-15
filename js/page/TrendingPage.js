@@ -284,7 +284,7 @@ class TrendingTab extends Component<Props> {
             store = {
                 items: [],
                 isLoading: false,
-                projectModes: [],//要显式的数据
+                projectModels: [],//要显式的数据
                 hideLoadingMore: true,//默认隐藏加载更多
             }
         }
@@ -338,7 +338,7 @@ class TrendingTab extends Component<Props> {
         return (
             <View style={styles.TrendingTabContainer}>
                 <FlatList
-                    data={store.projectModes}
+                    data={store.projectModels}
                     renderItem={data => this.renderItem(data)}
                     keyExtractor={item => "" + item.item.id + item.item["fullName"]}
                     refreshControl={
