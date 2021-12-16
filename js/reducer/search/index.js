@@ -68,6 +68,11 @@ export default function onAction(state = defaultState, action) {
                 hideLoadingMore: true,
                 pageIndex: action.pageIndex,
             };
+        case Types.SEARCH_ADD_KEY_SUCCESS://上拉加载更多成功
+            return {
+                ...state,
+                showBottomAddButton: false,
+            };
         default:
             return state;
     }

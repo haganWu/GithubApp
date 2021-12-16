@@ -131,7 +131,7 @@ class SearchPage extends Component<Props> {
      * @data 2021/12/15  14:25
      */
     saveKey() {
-        const {keys} = this.props;
+        const {keys, onAddSearchKey} = this.props;
         let key = this.inputKey;
         if (Utils.checkKeyIsExist(keys, key)) {
             this.toast.show(key + '已经存在');
@@ -145,6 +145,7 @@ class SearchPage extends Component<Props> {
             this.languageDao.save(keys);
             this.toast.show(key.name + '保存成功');
             this.isKeyChange = true;
+            onAddSearchKey()
         }
     }
 
@@ -270,6 +271,7 @@ const mapPopularDispatchToProps = dispatch => ({
     onSearchCancel: (token) => dispatch(actions.onSearchCancel(token)),
     onLoadMoreSearch: (pageIndex, pageSize, items, favoriteDao, callBack) => dispatch(actions.onLoadMoreSearch(pageIndex, pageSize, items, favoriteDao, callBack)),
     onLoadLanguage: (flag) => dispatch(actions.onLoadLanguage(flag)),
+    onAddSearchKey: () => dispatch(actions.onAddSearchKey())
 })
 export default connect(mapPopularStateToProps, mapPopularDispatchToProps)(SearchPage);
 

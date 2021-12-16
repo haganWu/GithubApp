@@ -67,6 +67,20 @@ export function onSearch(inputKey, pageSize, token, favoriteDao, popularKeys, ca
     }
 }
 
+/**
+ * @description 添加搜索关键字("拿下")成功
+ * @author HaganWu
+ * @data 2021/12/16  9:36
+ */
+export function onAddSearchKey() {
+    return dispatch => {
+        dispatch({
+            type: Types.SEARCH_ADD_KEY_SUCCESS,
+            showBottomAddButton: false
+        })
+    }
+}
+
 
 /**
  * @description 取消搜索action创建函数
