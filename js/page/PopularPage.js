@@ -249,7 +249,6 @@ class PopularTab extends Component<Props> {
                     }, "DetailPage");
                 }}
                 onFavorite={(item, isFavorite) => {
-                    console.log(`popularPage collect click-> name:${item["full_name"].toString()}, key:${item.id.toString()}`);
                     FavoriteUtil.onFavorite(FLAG_STORAGE.flag_popular, favoriteDao, item, isFavorite)
                 }}
             />

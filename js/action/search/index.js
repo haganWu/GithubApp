@@ -127,8 +127,6 @@ export function onLoadMoreSearch(pageIndex, pageSize, dataArray = [], favoriteDa
 
 
 function genFetchUrl(key) {
-    const urlValue = URL + key + QUERY_STR;
-    console.log(`urlValue:${urlValue}`);
     return URL + key + QUERY_STR;
 }
 

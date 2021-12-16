@@ -17,7 +17,6 @@ class PopularItem extends BaseItem {
         if (!item || !item["owner"]) {
             return null;
         }
-        // console.log(`PopularItem show info -> name:${item["full_name"].toString()}, key:${item.id.toString()}`);
         return (
             <TouchableOpacity
                 onPress={() => {

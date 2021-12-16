@@ -99,7 +99,7 @@ class SearchPage extends Component<Props> {
 
     renderItem(data) {
         const item = data.item;
-        const {theme} = this.params;
+        const {theme} = this.props;
         return <PopularItem
             projectModel={item}
             theme={theme}
@@ -110,7 +110,7 @@ class SearchPage extends Component<Props> {
                     callback,
                 }, 'DetailPage');
             }}
-            onFavorite={(item, isFavorite) => FavoriteUtil.onFavorite(this.favoriteDao, item, isFavorite, FLAG_STORAGE.flag_popular)}
+            onFavorite={(item, isFavorite) => FavoriteUtil.onFavorite(FLAG_STORAGE.flag_popular, this.favoriteDao, item, isFavorite)}
         />;
     }
 

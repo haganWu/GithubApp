@@ -19,7 +19,6 @@ export default class FavoriteUtil {
     static onFavorite(flag,favoriteDao, item, isFavorite) {
         let key = flag === FLAG_STORAGE.flag_popular ? item.id.toString() + item["full_name"] :
             item.id.toString() + item["fullName"];
-        console.log(`FavoriteUtil onFavorite --> item.id.toString:${item.id.toString()},key:${key}`)
         if (isFavorite) {
             favoriteDao.saveFavoriteItem(key, JSON.stringify(item));
         } else {
