@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GithubApp</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">LJrzlNax124ja5XWJFYt1OfjxU7ZyarZ5GrE9</string>
 </resources>

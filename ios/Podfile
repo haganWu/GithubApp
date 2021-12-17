@@ -12,6 +12,8 @@ target 'GithubApp' do
     :hermes_enabled => false
   )
 
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
   target 'GithubAppTests' do
     inherit! :complete
     # Pods for testing
