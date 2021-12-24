@@ -19,6 +19,7 @@ import AboutPage from "../page/about/AboutPage";
 import AboutMePage from "../page/about/AboutMePage";
 import CustomKeyLanguagePage from "../page/CustomKeyLanguagePage";
 import SearchPage from "../page/SearchPage";
+import CodePushPage from "../page/CodePushPage";
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,8 @@ class AppNavigators extends Component {
                     <Stack.Screen name="CustomKeyLanguagePage" component={CustomKeyLanguagePage}
                                   options={{headerShown: false}}/>
                     <Stack.Screen name="SearchPage" component={SearchPage}
+                                  options={{headerShown: false}}/>
+                    <Stack.Screen name="CodePushPage" component={CodePushPage}
                                   options={{headerShown: false}}/>
 
                     <Stack.Screen name="FetchDemo" component={FetchDemo}

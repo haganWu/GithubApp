@@ -214,10 +214,11 @@ const styles = StyleSheet.create({
     titleViewContainer: {
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "center"
     },
     titleViewText: {
         fontSize: 18,
-        color: "white",
+        color: "red",
         fontWeight: "400",
     },
 });

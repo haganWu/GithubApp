@@ -25,7 +25,8 @@ const REMOVE_KEY_ID = 0x0007;
 const CUSTOM_THEME_ITEM_ID = 0x0008;
 const ABOUT_AUTHOR_ITEM_ID = 0x0009;
 const FEEDBACK_ITEM_ID = 0x0010;
-const SHARE_ITEM_ID = 0x0011;
+const CODE_PUSH_ITEM_ID = 0x0011;
+const SHARE_ITEM_ID = 0x0012;
 
 const SHOW_TEST_BUTTON = false;
 
@@ -106,6 +107,13 @@ class MyPage extends Component {
                 break
             case FEEDBACK_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 反馈`);
+                break
+            case CODE_PUSH_ITEM_ID:
+                console.log(`onItemClickCallBack -> itemId:${itemId} 热更新`);
+                NavigationUtil.goPage({
+                    theme: this.props.theme,
+                    navigation: this.props.navigation,
+                }, "CodePushPage");
                 break
             case SHARE_ITEM_ID:
                 console.log(`onItemClickCallBack -> itemId:${itemId} 分享`);
@@ -205,6 +213,13 @@ class MyPage extends Component {
                         iconColor={theme.themeColor}
                         showBottomDividerLine={false}
                         itemClick={() => this.onItemClickCallBack(FEEDBACK_ITEM_ID)}
+                    />
+                    <MoreMenuView
+                        iconName={"push"}
+                        title={"热更新"}
+                        iconColor={theme.themeColor}
+                        showBottomDividerLine={false}
+                        itemClick={() => this.onItemClickCallBack(CODE_PUSH_ITEM_ID)}
                     />
                 </ScrollView>
             </View>

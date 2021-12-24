@@ -16,4 +16,5 @@ export const MORE_MENU = {
     About_Author: {name: '关于作者', iconName: 'zuozhe'},
     Feedback: {name: '反馈', iconName: 'wentifankui'},
     Share: {name: '分享', iconName: 'fenxiang'},
+    codePush: {name: '热更新', iconName: 'push'},
 }
