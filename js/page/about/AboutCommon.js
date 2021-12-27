@@ -5,6 +5,7 @@ import {Dimensions, Image, Platform, StyleSheet, Text, View} from "react-native"
 import GlobalStyles from "../../res/styles/GlobalStyles";
 import ViewUtil from "../../util/ViewUtil";
 import React from "react";
+import ImageCrop from "../../bridge/ImageCrop";
 
 /**
  * @author HaganWu
@@ -57,6 +58,11 @@ class AboutCommon {
 
     onShareClick() {
         console.log("AboutCommon Share Click!!");
+        ImageCrop.selectWithCrop(2,1).then((result: any) => {
+            console.log(`selectWithCrop result:${result}`)
+        }).catch((e: any) => {
+            console.log(`selectWithCrop e:${e}`)
+        });
     }
 
     getParallaxRenderConfig(params) {

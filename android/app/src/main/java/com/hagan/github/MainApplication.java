@@ -9,6 +9,7 @@ import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.hagan.github.crop.ImageCropReactPackage;
 import com.microsoft.codepush.react.CodePush;
 
 import java.lang.reflect.InvocationTargetException;
@@ -31,7 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
-//           packages.add(new CodePush(getResources().getString(R.string.CodePushDeploymentKey), MainApplication.this, BuildConfig.DEBUG));
+            //注册ImageCropReactPackage以供JS调用
+            packages.add(new ImageCropReactPackage());
           return packages;
         }
 
