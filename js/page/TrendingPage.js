@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     },
     titleViewText: {
         fontSize: 18,
-        color: "red",
+        color: "white",
         fontWeight: "400",
     },
 });

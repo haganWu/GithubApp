@@ -17,6 +17,7 @@ import NavigationBar from "../common/NavigationBar";
 import ViewUtil from "../util/ViewUtil";
 import BackPressComponent from "../common/BackPressComponent";
 import SafeAreaViewPlus from "../common/SafeAreaViewPlus";
+import NavigationUtil from "../navigator/NavigationUtil";
 
 type Props = {}
 
@@ -29,7 +30,7 @@ class CodePushPage extends Component<Props> {
     }
 
     onBackPress() {
-        this.onBack();
+        NavigationUtil.goBack(this.props.navigation);
         return true;
     }
 
